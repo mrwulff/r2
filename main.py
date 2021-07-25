@@ -1,5 +1,4 @@
 import os
-#os.environ['PYTHON_EGG_CACHE']='/dev/null'
 from appdirs import *
 appname = ""
 appauthor = "Acme"
