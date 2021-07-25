@@ -19,7 +19,7 @@ if ios==False:
     #os.environ["PYTHON_EGG_CACHE"] = f"{HOME}/Library/Caches/{BUNDLE}"
     config_file=(f"{HOME}"+'/kt/')
 
-###
+#####
 ####
 print (site_data_dir)
 from kivy.app import App
