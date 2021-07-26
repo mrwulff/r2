@@ -1,3 +1,6 @@
+debug=False
+ios=False
+
 import os
 from appdirs import *
 appname = ""
@@ -6,7 +9,7 @@ a= (user_config_dir(appname, appauthor))
 #a2=open(a,'w')
 #a2.write('test')
 #from os import *
-ios=False
+
 if ios==True:
     HOME = environ.get("HOME", "/invalid-home-dir")
     BUNDLE = environ.get("KIVY_BUNDLE_ID", "invalid-bundle-id")
@@ -22,10 +25,8 @@ if ios==False:
 #####
 ####
 #####
-print (site_data_dir)
 from kivy.app import App
 app = App.get_running_app()
-print (app,'asdfasdf')
 from kivy.lang import Builder
 from kivy.properties import BooleanProperty
 from kivy.properties import NumericProperty
@@ -52,7 +53,6 @@ from kivymd.uix.taptargetview import MDTapTargetView
 
 from kivy.core.window import Window
 from os.path import expanduser
-print (expanduser("~"))
 
 import json
 
@@ -68,24 +68,68 @@ ssl.verify = False
 f_size=50
 
 from kivy.config import Config
+user_g=''
+pass_g=''
+loc_g=''
+
+
+
+
 def writeuserdata():
-    x =  '{ "username":"John", "password":"30", "city":"New York"}'
+    with open(config_file+'data77.txt') as json_file:
+        data = json.load(json_file)
+
+    #print (data)
+    #print (type(data))
+    (data['username'])=user_g
+    (data['password'])=pass_g
+    (data['city'])=loc_g
+    #print (data['username'])
+    #data=str(data)
+    data = json.dumps(data, indent = 4)  
+
+    #print (data)
+    x=open(config_file+'data77.txt','w')
+    x.write(data)
+    x.close()
+
+def writeuserdata_init():
+    global user_g
+
+                                    
+    #user=user_g
+    if user_g=='':  
+        user_g='blankfuck'
+    print (user_g,'testtest')
+    print (dir(user_g))
+    
+
+    x = ' { "username":"test", "password":"30", "city":"lasvegas","ios":"False","usecache":"False","pcolor":"Black","scolor":"White"}'
     y = json.loads(x)
-    with open(config_file+'data.txt', 'w') as outfile:
+    #y = json.dumps(x)
+    with open(config_file+'data77.txt', 'w') as outfile:
         json.dump(y, outfile)
+    print ('writedata')
 
 def readuserdata():
-    with open(config_file+'data.txt') as json_file:
+    with open(config_file+'data77.txt') as json_file:
+        print (json_file)
         data = json.load(json_file)
-        #for p in data['people']:
         username=(data['username'])
         password=(data['password'])
         location=(data['city'])
-        print('')
-        return username,password,location
-#writeuserdata()
+        isios=(data['ios'])
+        usecache=((data['usecache']))
+        print (usecache,'usecachewtf')
+        pcolor=(data['pcolor'])
+        scolor=(data['scolor'])
+        return username,password,location,isios,usecache,pcolor,scolor
+#writeuserdata_init()
 
-username,password,location=readuserdata()
+username,password,location,isios,usecache,pcolor,scolor=readuserdata()
+user_g=username
+pass_g=password
+loc_g=location
 
 
 
@@ -103,7 +147,6 @@ h=int(h)
 w=int(w)
 rhino_x_g=w
 rhino_y_g=h
-print(w,'omgfasdfasdfasdf')
 try:
     w,g=str.split(w,'.')
 except:
@@ -124,12 +167,10 @@ if 1==1:
     #ios=False
     Config.set('graphics', 'width', str(w))
     Config.set('graphics', 'height', str(h))
-    #print ()
     Window.size = (w,h)
 #except:
 #    ios=True
-fakelogin=False
-fakelogin=True
+
 conf=False
 mj=[]
 mj2=[]
@@ -159,18 +200,20 @@ rhino_color_g=kivy.utils.get_color_from_hex(rhino_color_hex)
 
 import os
 ssl._create_default_https_context = ssl._create_unverified_context
-
+import emoji
 
 def login(self):
-        print (username)
+        global usecache
 
         #app = App.get_running_app()
         #print("app.directory = ", app.directory)
-        print ()
-        print("app.uWTFYOUASSser_data_dir = ", au,ad)
-        if fakelogin==True:
+        usecache=bool(usecache)
+        print (type(usecache),usecache,'usecache2')
+        
+
+        if usecache==True:
             print ('using fake data')
-        if fakelogin==False:
+        if usecache==False:
             print ("using real data")
             ssl.verify = False
 
@@ -184,7 +227,6 @@ def login(self):
             # aaa=open(dir_path+'/test2.html','wb')
             #global browser
             browser = mechanize.Browser()
-            #print (browser)
             
             browser.set_handle_robots(False)
             browser.set_handle_equiv(False)
@@ -194,16 +236,8 @@ def login(self):
             browser.select_form(name="ctl00")
             browser['emailaddress'] = username
             browser['mypassword'] = password
-            # ##print (browser)
-            # ##print browser.title
-            #print (browser)
-
 
             res = browser.submit()
-            # ##print dir(res)
-            # ##print res.header_items
-            # ##print res.get_data()
-            #print (browser)
 
             res = browser.open(PE_COUNTRIES)
             
@@ -211,13 +245,9 @@ def login(self):
 
             b2=open(ad+'/4cache.html','wb')
             b2.write(aa)
-
-
-            
             
             for i in res.readlines():
-                #print (i)
-                #b2.write(str(i))
+
                 try:
                     if "allrights" in i or 'copyright -' in i or 'ino Women’s Cold Crew P' in i:
                         ##print
@@ -228,12 +258,9 @@ def login(self):
                     u = u + (i)
                 except:
 
-                    ##print
                     'fauil', i
-            #print (u)
 
-        if fakelogin==True:
-            print ('fake')
+
         parse('junk')
 
 
@@ -267,10 +294,12 @@ def parse(aa):
     
 
 
-    if conf==False:
-        print (ad,'lololo')
+    if usecache==True:
+        print ('asdfasdfasdf')
         aaa=open(ad+'/4cache.html','r')
-    if conf==True:
+        print (aaa,'2asdf')
+    if usecache==True:
+        print ('using cache data')
         aaa=open(ad+'/conf.html','r')
 
 
@@ -283,7 +312,6 @@ def parse(aa):
     
     #for i in range(15,len(ab)-15):
     for i in range(dn,len(ab)-dn):
-        #print (i%dn,i/dn,ab[i].get_text())
         asds= str(ab[i].contents)
         if 'input name' not in asds:
 
@@ -295,18 +323,14 @@ def parse(aa):
 
     
     for z in range(len(l)):
-        #print (l[z],)
 
 
         if z%dm==0:
             d.append(l[z])
-            #print (l[z],'meh')
         if z%dm==1:
             ti.append(l[z])
-            #print (l[z])
         if z%dm==2:
             j.append(l[z])
-            #print (l[z])
         if z%dm==3:
             s.append(l[z])
             
@@ -315,7 +339,6 @@ def parse(aa):
             
         if z%dm==5:
             l2.append(l[z])
-            #print (l[z])
         if z%dm==6:
             c.append(l[z])
         if z%dm==7:
@@ -336,7 +359,7 @@ def parse(aa):
 
     for q in range(len(d)):
         em=''
-        '''
+        
         if p[q]=="ME":
             print ('omg ME🔌')
             em=em+(emoji.emojize(':electric_plug:'))
@@ -348,7 +371,7 @@ def parse(aa):
             em=em+(emoji.emojize(':ice_hockey:'))
         if 'MGM' in l[q]:
             em=em+(emoji.emojize(':lion:'))
-            '''
+            
         #mjp.append d[q]
         #mjp.append ti[q]
         print (d[q])
@@ -375,7 +398,7 @@ def parse(aa):
         #joob='[color=ff3333]'+d[q]+'[/color] '+ti[q]+' ~ '+v[q]+' ~ '+l[q]+' ~ '+ti[q]+' ~  '+c[q]+' ~ '+ty[q]+' ~ '+p[q]+' ~ '+st[q]+' ~ '+j[q]+' ~ '+n[q]
         try:
             joob=d[q]+' '+ti[q]+' ~ '+v[q]+' ~ '+l2[q]+' ~ '+s[q]+' ~ \n '+c[q]+' ~ '+ty[q]+' ~ '+p[q]+' ~ '+st[q]+' ~ '+j[q]+' ~ '+n[q]
-            joob2='[color='+rhino_color_hex+']'+month+'/'+date+'[/color] '+ti[q]+'  '+' \n[b]'+showreal+'[/b]  \n'+v[q]+'\n[size=40]'+ty[q]+'  '+p[q]+'  '+st[q]+'  '+n[q]
+            joob2='[color='+rhino_color_hex+']'+month+'/'+date+'[/color] '+ti[q]+'  '+' \n[b]'+showreal+'[/b]  \n'+v[q]+'\n[size=40]'+ty[q]+'  '+p[q]+em+'  '+st[q]+'  '+n[q]
         except:
             ''
         mj.append(joob)
@@ -402,6 +425,9 @@ Builder.load_string('''
 #:import random random.random
 #:import webbrowser webbrowser
 #:import emoji emoji
+#:import Factory kivy.factory.Factory
+#:import toast kivymd.toast.toast
+
 
 <BackgroundColor@Widget>
     #background_color: 1, 1, 1, 1
@@ -525,13 +551,9 @@ Builder.load_string('''
     BoxLayout:
         #orientation: "horizontal"
         #Button:
-        spacing: dp(40)
+        spacing: dp(20)
         padding: dp(40)
-        halign: 'center'
-        #size: self.parent.size  # important!
-        #pos: self.parent.pos
-        #center: 50,50
-        #MDFloatingActionButton:
+
 
         MDFillRoundFlatButton
             #pos: root.rhino_x+dp(50),50
@@ -548,93 +570,261 @@ Builder.load_string('''
             text: 'Schedule'
             text_color: 'white'
             md_bg_color: root.rhino_color
-            #theme_text_color: "Primary"
-            #size_hint: None, None
-            #pos_hint: {'right': 3}
+
             user_font_size: dp(80)
             on_release: 
                 root.manager.transition.direction = 'up'
                 #transition=FadeTransition()
                 root.manager.current = root.manager.next()
-            #on_press:   root.login()
-            pos: root.rhino_x+dp(50),250
-        #Button:
-        MDFillRoundFlatButton
-            text: 'Testy'
-            icon: "information-variant"
-            size: 150, 50
-            #pos: root.rhino_x-dp(150),50
-            #size_hint: None, None
-            #pos_hint: {'right': 1}
-            on_release: app.tap_target_start()
-            #on_release:
-            #    root.manager.current = 'MDC'
-        #MDIconButton:
-        ##    icon: "language-python"
-        #Button:
-        #    text: 'Youtube'
-        #    size: 150, 50
-        #    size_hint: None, None
-        #    pos_hint: {'right': 1}
-        #    on_release:
-        #        root.manager.current = 'Info'
 
+        
 <Options>:
+    Image:
+        source: 'r.png'
+        source: 'rh.jpg'
+        size: self.width,self.height
     MDBoxLayout:
+        #md_bg_color: 0, 1, 1, .5
+      ##  canvas.before:
+        #    Color:
+         #       rgba: .5, .5,.5, .5
+          #  Rectangle:
+           #     pos: self.pos
+            #    size: self.size
+
+
+
+    
         #md_bg_color: app.theme_cls.primary_color
         orientation: "vertical"
-        padding: 20,20
-        MDBoxLayout:
-            orientation: "horizontal"
-            #size: 150, 50
-
-            Button:
-                text: 'ok'
-                size: 150, 50
-                size_hint: None, None
-                pos_hint: {'right': 1}
-                on_release: root.manager.current = root.manager.next()
-            Button:
-                text: 'cancel'
-                size: 150, 50
-                size_hint: None, None
-                pos_hint: {'right': 1}
-            MDCheckbox:
-                text: 'hello'
+        #padding: 20,20
+        size_hint:(.7,.8)
+        h_align: 'center'
+        pos_hint: {'center_x': .5}
+        
             
-
         MDCard:
+            md_bg_color: .1,.1,.1, .7
+            background: "black"
             orientation: "horizontal"
-            MDLabel:
-                text: 'option1'
+            padding: dp(20)
+            #spacing:dp(10)
+
+            BoxLayout:
                 
-            MDSwitch:
-                width: dp(50)
-        BoxLayout:
+                orientation: "vertical"
+                MDLabel:
+                    color: app.theme_cls.primary_light
+                    text: 'Account:'
+                MDSeparator:
+                    height: "1dp"
+                MDLabel:
+                    color: app.theme_cls.primary_light
+                    id: un2
+                    text: root.username2
+                
+            MDRaisedButton:
+                text: 'Login'
+                width: dp(20)
+                padding: dp(30),dp(30)
+                #on_release: Factory.MyPopup().open()
+                #on_release: root.show_popup()
+                on_release:root.manager.current = 'LogIn'
+            MDRectangleFlatButton:
+
+                text: 'clear'
+                width: dp(20),dp(30)
+                #padding: dp(30)
+        MDCard:
+            
+            md_bg_color: .1,.1,.1, .7
+            padding: dp(20)
             orientation: "horizontal"
             MDLabel:
+                color: app.theme_cls.primary_light
                 text: 'option1'
                 
             MDSwitch:
                 width: dp(55)
         MDCard:
+            md_bg_color: .1,.1,.1, .9
+            padding: dp(20)
+            orientation: "horizontal"
+            MDLabel:
+                color: app.theme_cls.primary_light
+                text: 'option2'
+                
+            MDSwitch:
+                width: dp(55)
+        MDCard:
+            padding: dp(20)
+            md_bg_color: .1,.1,.1, .7
             size: '300dp','100dp'
             orientation: "horizontal"
             MDLabel:
-                text: 'option1'
+                color: app.theme_cls.primary_light
+                text: 'option3'
                 
             MDSwitch:
                 valighn: 'center'
                 padding: dp(50),dp(70)
                 width: dp(45)
-        BoxLayout:
+        MDCard:
+            md_bg_color: .1,.1,.1, .9
+            padding: dp(20)
             orientation: "horizontal"
             MDLabel:
-                text: 'option1'
+                color: app.theme_cls.primary_light
+                text: 'option4'
                 
             MDSwitch:
                 width: dp(20)
                 padding: dp(30)
+
+        BoxLayout:
+            
+            #orientation: "horizontal"
+            #Button:
+            spacing: dp(0)
+            padding: dp(-40),dp(40)
+
+
+            #MDFillRoundFlatButton
+                #pos: root.rhino_x+dp(50),50
+                #icon: "tune"
+                #text: 'Options'
+                #size: 150, 50
+                #size_hint: None, None
+                #pos_hint: {'right':2}
+                #on_release:
+                   # root.manager.current = 'Options'
+            MDFillRoundFlatButton:
+                icon: "login"
+                #halign: 'center'
+                text: 'Back2'
+                #text_color: root.custom_font_color
+                #md_bg_color: root.rhino_color
+
+                user_font_size: dp(80)
+                on_release: 
+                    root.manager.transition.direction = 'up'
+                    #transition=FadeTransition()
+                    root.manager.current = 'Think Rhino'
+    
+<LogIn>:
+    Image:
+        source: 'r.png'
+        source: 'rh.jpg'
+        size: self.width,self.height
+
+    #width: dp(300)
+    #height:dp(200)
+    #size: '30dp','100dp'
+    #padding: dp(50)
+    #size_hint:(.8, .2)
+    #title: 'Login'
+
+
+    MDBoxLayout:
+        orientation: "vertical"
+        Label:
+        MDBoxLayout:
+            md_bg_color: .1,.1,.1, .7
+            
+            orientation: "vertical"
+            size_hint:.9,.7
+            spacing: dp(25)
+            padding: dp(50)
+            pos_hint: {"center_x": .5, "center_y": .1}
+            #pos_hint: {"center_x": .5}
+
+            MDBoxLayout:
+                
+                size_hint:(.8,.08)
+                orientation: "horizontal"
+                Label:
+                    color: app.theme_cls.accent_color
+                    text: 'Email:'
+                    
+
+                MDTextFieldRect:
+                    valign: 'bottom'
+                    mode: "fill"
+                    fill_color: .5, .5, .5, .9
+                    text: root.user_l
+                    hint_text: 'EXAMPLE@EXAMPLE.COM'
+                    id: email
+                    
+                    multiline: False
+            MDBoxLayout:
+                padding: dp(10)
+                size_hint:.8,.09
+                orientation: "horizontal"
+                Label:
+                    color: app.theme_cls.accent_color
+                    text: 'Password:'
+
+                #TextInput:
+                MDTextFieldRect:
+
+                    valign: 'top'
+                
+                    text: root.pass_l
+                    hint_text: 'PASSWORD'
+                    password: True
+                    #text:'blank password'
+                    id:pass2
+                    
+                    multiline: False
+                    color_active: app.theme_cls.accent_color
+                    normal_color: app.theme_cls.primary_light
+                    color_mode: 'accent'
+                    helper_text_mode: "on_focus"
+                    helper_text: "Color is defined by 'line_color_focus' property"
+                    line_color_focus: 1, 0, 1, 1
+
+                
+            MDBoxLayout:
+                size_hint:.8,.19
+                orientation: "horizontal"        
+                Label:
+                    text: 'Loaction:'
+                    color: app.theme_cls.accent_color
+
+
+
+
+
+                Spinner:
+                #MDDropDownItem:
+                    values: app.locations
+                    id: loc
+                    color: app.theme_cls.accent_color
+                    text:'location'
+
+        MDBoxLayout:
+            padding: dp(40)
+            spacing: dp(40)
+            orientation: "horizontal"  
+            halign: "right"
+
+
+
+
+
+            pos_hint: { "center_y": .9}      
+            MDRectangleFlatButton:
+                text: 'Clear'
+
+
+
+            
+            MDRectangleFlatButton:
+                text: "Cancel"
+                on_release: root.manager.current = 'Think Rhino'
+            MDRaisedButton:
+                text: "Save"
+                on_release: root.saveconfig()
 
 <SelectableLabel>:
 
@@ -678,7 +868,8 @@ Builder.load_string('''
     halign:'left'
     width: 9000
     markup: True
-
+    
+                                    
 
 
     #canvas.before:
@@ -731,6 +922,7 @@ Builder.load_string('''
         #touch_multiselect: True
         halign:'left'
         size: 500,9000
+        
 
 <RVScreen>:
     #text_color: 'white'
@@ -757,9 +949,11 @@ Builder.load_string('''
             #size: 1500, 50
             #height:500
             
+            
         BoxLayout:
-            padding: dp(20)
-            spacing: dp(10)
+            #blabla
+            padding: dp(40)
+            spacing: dp(20)
             #text_color: 'white'
             #spacing: dp(5)
             #canvas:
@@ -910,36 +1104,6 @@ Builder.load_string('''
 
 
 
-class PaintWindow(Screen):
-    pass
-
-
-class PopupColor(Popup):
-    def on_press_dismiss(self, colorpicker, *args):
-        self.dismiss()
-        color = str(colorpicker.hex_color)[1:]
-        print(color)
-
-
-class PopupRun(App):
-    def build(self):
-        main_window = PaintWindow()
-        popup = PopupColor()
-        popup_color = ColorPicker()
-        popup.open()
-
-        def on_color(instance, value):
-            print("RGBA = ", str(value))
-            print("HSV = ", str(instance.hsv))
-            print("HEX = ", str(instance.hex_color))
-            hex_color = str(instance.hex_color)
-            # Return hex color code without '#'
-            return hex_color[1:]
-
-        # Return valye after change color in ColorPicker
-        popup_color.bind(color=on_color)
-
-        return main_window
 
 
 class CustomScreen(Screen):
@@ -953,8 +1117,9 @@ class CustomScreen(Screen):
     rhino_x=rhino_x_g/2
 
     rhino_y=rhino_y_g/2
+    if debug==True:
 
-    print ("login")
+        print ("login")
 
     def wow(self):
         print ("OMG")
@@ -984,7 +1149,9 @@ class CustomScreen(Screen):
 
     
 
-
+class Widgets(Screen):
+    def btn(self):
+        show_popup(self)
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
                                  RecycleBoxLayout):
@@ -1141,28 +1308,48 @@ class MDC(Screen):
     pass
 
 
-class Ytube(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        #self.theme_cls.colors = 'Red'
-        #self.theme_cls.primary_palette = "Red"
-        #self.root = Builder.load_string(kv)
 
-        #screen_id = self.root.get_screen('main').ids.video_list
+class LogIn(Screen):
+    global user_g
+    global pass_g
+    global loc_g
+    user_l=user_g
+    pass_l=pass_g
+    loc_l=loc_g
 
-        for i in range(5):
-            # Make a new image widget for each MDCard
-            image = AsyncImage(
-                source='https://static.hub.91mobiles.com/wp-content/uploads/2020/05/How-to-download-youtube-videos.jpg', size_hint=(1, .7), )
-            card = MDCard(orientation='vertical', pos_hint={
-                            'center_x': .5, 'center_y': .7}, size_hint=(.9, None), height=200)
-            card.add_widget(image)
-            card.add_widget(MDLabel(
-                text=(str(i)+'wow'+'\nwow'), size_hint=(.6, .2), ))
-            #Screen.add_widget(card)
+    def saveconfig(self):
+        #print ('wowowoow')
+        global user_g
+        global pass_g
+        global loc_g
+
+
+
+        xxu=self.manager.get_screen('LogIn').ids.email.text
+        xxp=self.manager.get_screen('LogIn').ids.pass2.text
+        xxl=self.manager.get_screen('LogIn').ids.loc.text
+        print (xxl)
+
+        self.manager.get_screen('Options').ids.un2.text=xxu
+        user_g=xxu
+        pass_g=xxp
+        loc_g=xxl
+        writeuserdata()
 
 class Options(Screen):
+    global username
+    username2=username
+    locations=['lasvegas','notlasvegas']
 
+    custom_font_color=(.9,0,.9,.9)
+    #color: app.theme_cls.primary_light
+    def open_popup(self):
+        pops = MyPopup()
+        pops.open()
+    
+    
+    
+    
     def on_color(self, instance, value):
             print("\non_color:")
             print("\tvalue(rgba)={}".format(value))
@@ -1180,12 +1367,22 @@ class MenuScreen(Screen):
 
 
 class ScreenManagerApp(MDApp):
-    print('fuck')
-
-
+    rloc=[]
+    locations=[]
+    locations2=['denver', 'Colorado','dc', 'DC','florida' , 'Florida','georgia' , 'Georgia','indiana' , 'Indiana','kentucky' , 'Kentucky','lasvegas' , 'Las Vegas','losangeles' , 'Los Angeles' ,'louisiana' , 'Louisiana','michigan' , 'Michigan','minnesota' , 'Minnesota','missouri' , 'Missouri','mississippi' , 'Mississippi','montana' , 'Montana','newmexico' , 'New Mexico','northerncalifornia' , 'Northern California' ,'northwest' , 'Northwest','ohio' , 'Ohio','reno' , 'Reno','california' , 'San Diego','southcarolina' , 'South Carolina','tempe' , 'Tempe','memphis' , 'Tennessee','texas' , 'Texas','tucson' , 'Tucson','wisconsin' , 'Wisconsin',]
+    for i in range(0,len(locations2),2):
+        rloc.append( (locations2[i]))
+        locations.append((locations2[i+1]))
+    def saveconfig(self):
+        print ('wowow')
+        #((self.root.screens[4].username2))='bob'
+        print (dir(self.root.get_screen('Options')))
+        #print (username2,'username2')
+        print(self.root.get_screen('Options').ids)
+    print (rloc,'rloc')
+        
     def build(self):
-        #print 'shit'
-        os.environ['PYTHON_EGG_CACHE']='/SHITBALL'
+        self.theme_cls.primary_palette = "Orange" 
         
         root = ScreenManager(transition=FadeTransition())
         #sm = ScreenManager(transition=WipeTransition())
@@ -1195,8 +1392,10 @@ class ScreenManagerApp(MDApp):
         root.add_widget(MenuScreen(name='menu'))
         root.add_widget(Options(name='Options'))
         root.add_widget(MDC(name='MDC'))
-        root.add_widget(Ytube(name='Ytube'))
+        #root.add_widget(Ytube(name='Ytube'))
         root.add_widget(Info(name='Info'))
+        root.add_widget(LogIn(name='LogIn'))
+        self.items = [f"Item {i}" for i in range(50)]
 
 
 
