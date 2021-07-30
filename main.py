@@ -1,5 +1,5 @@
 debug=False
-ios=False
+ios=True
 
 import os
 from appdirs import *
@@ -11,8 +11,8 @@ a= (user_config_dir(appname, appauthor))
 #from os import *
 
 if ios==True:
-    HOME = environ.get("HOME", "/invalid-home-dir")
-    BUNDLE = environ.get("KIVY_BUNDLE_ID", "invalid-bundle-id")
+    HOME = environ.get("HOME", "/")
+    BUNDLE = environ.get("KIVY_BUNDLE_ID", "/")
     environ["PYTHON_EGG_CACHE"] = f"{HOME}/Library/Caches/{BUNDLE}"
     config_file=(f"{HOME}/Library/Caches/{BUNDLE}")
 
@@ -104,7 +104,7 @@ def writeuserdata_init():
     print (dir(user_g))
     
 
-    x = ' { "username":"test", "password":"30", "city":"lasvegas","ios":"False","usecache":"False","pcolor":"Black","scolor":"White"}'
+    x = ' { "username":"test", "password":"30", "city":"lasvegas","ios":"False","usecache":"True","pcolor":"Black","scolor":"White"}'
     y = json.loads(x)
     #y = json.dumps(x)
     with open(config_file+'data77.txt', 'w') as outfile:
@@ -124,7 +124,13 @@ def readuserdata():
         pcolor=(data['pcolor'])
         scolor=(data['scolor'])
         return username,password,location,isios,usecache,pcolor,scolor
-#writeuserdata_init()
+try:
+    temp=open(config_file+'data77.txt','r')
+    temp.close()
+    
+except:
+    print ('writing new data')
+    writeuserdata_init()
 
 username,password,location,isios,usecache,pcolor,scolor=readuserdata()
 user_g=username
@@ -211,11 +217,15 @@ def login(self):
         print (type(usecache),usecache,'usecache2')
         
 
-        if usecache==True:
-            print ('using fake data')
+        #if usecache==True:
+        #    print ('using fake data')
+        #if usecache==False:
+        print (username,password,location,'lolsecurity')
         if usecache==False:
             print ("using real data")
             ssl.verify = False
+            
+            
 
 
             PE_LOGIN = 'https://www.thinkrhino.com/employee/lasvegas/index.aspx'
@@ -237,6 +247,7 @@ def login(self):
             browser['emailaddress'] = username
             browser['mypassword'] = password
 
+            
             res = browser.submit()
 
             res = browser.open(PE_COUNTRIES)
@@ -261,7 +272,11 @@ def login(self):
                     'fauil', i
 
 
-        parse('junk')
+            parse('junk')
+        #except:
+        if usecache==True:
+            print ('lolfail')
+            parse('junk2')
 
 
 
@@ -298,9 +313,9 @@ def parse(aa):
         print ('asdfasdfasdf')
         aaa=open(ad+'/4cache.html','r')
         print (aaa,'2asdf')
-    if usecache==True:
-        print ('using cache data')
-        aaa=open(ad+'/conf.html','r')
+    #if usecache==True:
+    #    print ('using cache data')
+    #    aaa=open(ad+'/conf.html','r')
 
 
     #ab=aaa.read()
@@ -732,7 +747,7 @@ Builder.load_string('''
             md_bg_color: .1,.1,.1, .7
             
             orientation: "vertical"
-            size_hint:.9,.7
+            size_hint:.9,.97
             spacing: dp(25)
             padding: dp(50)
             pos_hint: {"center_x": .5, "center_y": .1}
@@ -740,7 +755,7 @@ Builder.load_string('''
 
             MDBoxLayout:
                 
-                size_hint:(.8,.08)
+                size_hint:(.8,dp(.38))
                 orientation: "horizontal"
                 Label:
                     color: app.theme_cls.accent_color
@@ -758,7 +773,7 @@ Builder.load_string('''
                     multiline: False
             MDBoxLayout:
                 padding: dp(10)
-                size_hint:.8,.09
+                size_hint:.8,dp(.49)
                 orientation: "horizontal"
                 Label:
                     color: app.theme_cls.accent_color
@@ -768,6 +783,7 @@ Builder.load_string('''
                 MDTextFieldRect:
 
                     valign: 'top'
+                    width: dp(100)
                 
                     text: root.pass_l
                     hint_text: 'PASSWORD'
@@ -828,13 +844,10 @@ Builder.load_string('''
 
 <SelectableLabel>:
 
-    spacing: dp(150)
-    padding: dp(20),dp(20)
+
+    padding: dp(30),dp(30)
     height: self.texture_size[1]
-    #spacing: dp(10)
-    #on_release: root.dismiss()
-    #on_press:   root.manager.current = root.manager.next()
-    # Draw a background to indicate selection
+
 
 
 
@@ -865,8 +878,8 @@ Builder.load_string('''
     
     #text_size: self.size
     text_size : self.width, None
-    halign:'left'
-    width: 9000
+    #halign:'left'
+    #width: 9000
     markup: True
     
                                     
@@ -880,39 +893,22 @@ Builder.load_string('''
     #        size: self.size
 <RV>:
 
-    #spacing: dp(150)
-    #padding: dp(30)
-    
-    
-    #canvas:
-    #    Color:
-    #        rgba:0,1,0,.5
-    #    Rectangle:
-    #        pos: self.pos
-    #        size: self.size
     viewclass: 'SelectableLabel'
     id: rv
-    #spacing: dp(10)
-    #height:5000
-    #size: 500,9000
-    #on_press:   root.manager.current = root.manager.next()
-    
+
     SelectableRecycleBoxLayout:
-        #spacing: dp(15)
+        spacing: dp(15)
         padding: dp(10)
         canvas:
             #backgroundcolorforreal
-
             Color:
                 rgba:0,0,0,.9
             Rectangle:
                 pos: self.pos
                 size: self.size
-
             
-        #spacing: dp(15)
         #font_size: dp(196)
-        default_size: dp(335), dp(64)
+        default_size: dp(335), dp(20)
         #default_size: 6000, dp(30)
         #default_size_hint: 5000,dp(64)
         size_hint_y: None
@@ -929,16 +925,16 @@ Builder.load_string('''
     #spacing: dp(15)
     #padding: dp(30)
 
-    #canvas:
-    #    Color:
-    #        rgba:0,1,0,1
-    #BoxLayout:
-    FloatLayout:
+    canvas:
+        Color:
+            rgba:0,1,0,1
+    MDBoxLayout:
+    #FloatLayout:
         #text_color: 'white'
         #spacing: dp(105)
-        #canvas:
-        #    Color:
-        #        rgba:0,1,0,1
+        canvas:
+            Color:
+                rgba:0,1,0,1
         orientation: "vertical"
         #adaptive_height: True
         height:50
@@ -946,24 +942,20 @@ Builder.load_string('''
         RV:
             #padding: dp(30)
             #on_press:   root.manager.current = root.manager.next()
-            #size: 1500, 50
-            #height:500
+            size: 1500, 50
+            
+            height:500
             
             
-        BoxLayout:
-            #blabla
-            padding: dp(40)
+        MDBoxLayout:
+            padding: dp(40),dp(20)
             spacing: dp(20)
-            #text_color: 'white'
-            #spacing: dp(5)
-            #canvas:
-            #    Color:
-            #        rgba:0,1,0,1
+
             adaptive_height: True
             orientation: "horizontal"
             size: 400, 500
-            #height:20
-            #default_size: 50,50
+            height:20
+            default_size: 50,50
             MDFillRoundFlatButton:
                 icon: "keyboard-backspace"
                 user_font_size: "32sp"
@@ -1245,17 +1237,20 @@ class RV(RecycleView):
         #print (mj2,'MOTHERUFCKER')
         #self.change_line()
         odd=0
-        for i in range(len(mj)):
-            odd=odd+1
-            self.data[i]={'text': mj2[i]}
-            if odd%2==0:
-                pass
-                self.data[i]={'text': mj2[i],'color':third_color_g,'font_size':f_size}
-            if odd%2==1:
-                pass
-                self.data[i]={'text': mj2[i],'color':fourth_color_g,'font_size':f_size+.01}
+        try:
+            for i in range(len(mj)):
+                odd=odd+1
+                self.data[i]={'text': mj2[i]}
+                if odd%2==0:
+                    pass
+                    self.data[i]={'text': mj2[i],'color':third_color_g,'font_size':f_size}
+                if odd%2==1:
+                    pass
+                    self.data[i]={'text': mj2[i],'color':fourth_color_g,'font_size':f_size+.01}
 
-                print ('DISPLAY DATA')
+                    print ('DISPLAY DATA')
+        except:
+            print ('keyerror')
     #login()
     def change_line(self):
         self.data[0] = '101'
@@ -1370,9 +1365,12 @@ class ScreenManagerApp(MDApp):
     rloc=[]
     locations=[]
     locations2=['denver', 'Colorado','dc', 'DC','florida' , 'Florida','georgia' , 'Georgia','indiana' , 'Indiana','kentucky' , 'Kentucky','lasvegas' , 'Las Vegas','losangeles' , 'Los Angeles' ,'louisiana' , 'Louisiana','michigan' , 'Michigan','minnesota' , 'Minnesota','missouri' , 'Missouri','mississippi' , 'Mississippi','montana' , 'Montana','newmexico' , 'New Mexico','northerncalifornia' , 'Northern California' ,'northwest' , 'Northwest','ohio' , 'Ohio','reno' , 'Reno','california' , 'San Diego','southcarolina' , 'South Carolina','tempe' , 'Tempe','memphis' , 'Tennessee','texas' , 'Texas','tucson' , 'Tucson','wisconsin' , 'Wisconsin',]
+    
+    locations3=['denver', 'dc', 'florida' ,'georgia' , 'indiana' ,'kentucky' , 'lasvegas' ,'losangeles' , 'louisiana' , 'michigan' , 'minnesota' , 'missouri' , 'mississippi' , 'montana' ,'newmexico' , 'northerncalifornia'  ,'northwest' ,'ohio' , 'reno' , 'california' , 'southcarolina' ,'tempe' , 'memphis' , 'texas' , 'tucson' ,'wisconsin'  ]
     for i in range(0,len(locations2),2):
         rloc.append( (locations2[i]))
         locations.append((locations2[i+1]))
+    locations=locations3
     def saveconfig(self):
         print ('wowow')
         #((self.root.screens[4].username2))='bob'
