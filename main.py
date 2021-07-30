@@ -902,7 +902,7 @@ Builder.load_string('''
         canvas:
             #backgroundcolorforreal
             Color:
-                rgba:0,0,0,.9
+                rgba:0,0,0,.1
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -921,20 +921,30 @@ Builder.load_string('''
         
 
 <RVScreen>:
+    canvas:
+        Color:
+            rgba:0,1,0,1
+    text_size : self.width, None
+    halign:'left'
+    #root.load()
+    font_size_hint: dp(20)
+    Image:
+        id: jpgs
+        source: 'rh.jpg'
+        size: self.width,self.height
+        opacity: 1
     #text_color: 'white'
     #spacing: dp(15)
     #padding: dp(30)
 
-    canvas:
-        Color:
-            rgba:0,1,0,1
+
     MDBoxLayout:
     #FloatLayout:
         #text_color: 'white'
         #spacing: dp(105)
         canvas:
             Color:
-                rgba:0,1,0,1
+                rgba:0,1,0,0
         orientation: "vertical"
         #adaptive_height: True
         height:50
@@ -962,7 +972,7 @@ Builder.load_string('''
                 elevation_normal: 12
                 background_normal: ''
                 
-                #background_color: 1, .9, .4, .85
+                #background_color: 1, .9, .4, .1
                 text: 'Back'
                 size_hint: None, None
                 #size: 150,150
