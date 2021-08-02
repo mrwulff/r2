@@ -221,7 +221,8 @@ def login(self):
         #    print ('using fake data')
         #if usecache==False:
         print (username,password,location,'lolsecurity')
-        if usecache==False:
+        #if usecache==False:
+        if 1==1:
             print ("using real data")
             ssl.verify = False
             
@@ -305,6 +306,7 @@ def parse(aa):
     dd={}
     mj=[]
     mj2=[]
+    off=[]
 
     
 
@@ -335,7 +337,7 @@ def parse(aa):
         
 
 
-
+    print (l,'onelasttime')
     
     for z in range(len(l)):
 
@@ -368,7 +370,9 @@ def parse(aa):
             tk.append(l[z])
         if z%dm==12:
             pl.append(l[z])
-
+        if z%dm==13:
+            off.append(l[z])
+    print ('lololol',off)
 
 
 
@@ -407,15 +411,24 @@ def parse(aa):
         except:
             ''
         try:
+            print (off(q),'p11')
+        except:
+            ''
+        try:
             showjunk,showreal=str.split(s[q],') ')
         except:
             showreal=s[q]
         #joob='[color=ff3333]'+d[q]+'[/color] '+ti[q]+' ~ '+v[q]+' ~ '+l[q]+' ~ '+ti[q]+' ~  '+c[q]+' ~ '+ty[q]+' ~ '+p[q]+' ~ '+st[q]+' ~ '+j[q]+' ~ '+n[q]
         try:
-            joob=d[q]+' '+ti[q]+' ~ '+v[q]+' ~ '+l2[q]+' ~ '+s[q]+' ~ \n '+c[q]+' ~ '+ty[q]+' ~ '+p[q]+' ~ '+st[q]+' ~ '+j[q]+' ~ '+n[q]
+            joob=d[q]+' '+ti[q]+' ~ '+v[q]+' ~ '+l2[q]+' ~ '+s[q]+' ~ \n '+c[q]+' ~ '+ty[q]+' ~ '+p[q]+' ~ '+st[q]+' ~ '+j[q]+' ~ '+n[q]+ ' ~ '+off[q]
             joob2='[color='+rhino_color_hex+']'+month+'/'+date+'[/color] '+ti[q]+'  '+' \n[b]'+showreal+'[/b]  \n'+v[q]+'\n[size=40]'+ty[q]+'  '+p[q]+em+'  '+st[q]+'  '+n[q]
         except:
             ''
+        if 'aken off call' in off[q]:
+            joob2="[color=red]"+joob2+' '+off[q]+"[/color]"
+            
+        
+        print (joob)
         mj.append(joob)
         mj2.append(joob2)
 
