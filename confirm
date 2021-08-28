@@ -1,0 +1,37 @@
+    def confirm(self):
+        confable=False
+        print ('ONEJOB',onejob[index5+1],index5)
+        try:
+            ht= onejob[index5 + 1][14]
+            h2 = str.split(str(ht), '"')
+            confable = True
+        except:
+            print ('nonconfirmable')
+            pass
+
+        if confable==True:
+            print (type(browser))
+            if type(browser)==unicode:
+                print(browser, 'browser fail')
+            else:
+                browser.select_form(name="ctl00")
+                print(browser, 'browser 1')
+                control_t = browser.form.find_control("__EVENTTARGET")
+                control_a = browser.form.find_control("__EVENTARGUMENT")
+                print(browser, 'browser 2')
+                control_t.readonly = False
+                control_a.readonly = False
+
+                control_t.value = str(ht)
+                control_a.value = 'Confirm'
+                print(browser, 'browser 3')
+
+                response = browser.submit()
+                print(browser, 'browser 4')
+                aa = response.get_data()
+                print(browser, 'browser 5')
+
+                #aaa = open('aaa.html', 'wb')
+                #aaa.write((aa))
+                #aaa.close()
+                #browser.open('test2.html')
