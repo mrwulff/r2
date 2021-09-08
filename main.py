@@ -52,6 +52,9 @@ from kivy.properties import ObjectProperty
 from kivymd.uix.taptargetview import MDTapTargetView
 from kivymd.uix.dialog import  MDDialog
 from kivymd.uix.button import MDFlatButton
+from kivymd.uix.behaviors.toggle_behavior import MDToggleButton
+from kivymd.uix.button import MDRectangleFlatButton
+from kivymd.uix.button import MDRaisedButton
 
 
 
@@ -71,6 +74,8 @@ import json
 ssl.verify = False
 
 f_size=50
+if ios==False:
+    f_size=25
 
 from kivy.config import Config
 user_g=''
@@ -89,11 +94,14 @@ def writeuserdata():
     (data['username'])=user_g
     (data['password'])=pass_g
     (data['city'])=loc_g
+    (data['usecache'])=usecache_g
+    (data['pcolor'])=pcolor_g
+    (data['scolor'])=scolor_g
     #print (data['username'])
     #data=str(data)
     data = json.dumps(data, indent = 4)  
 
-    #print (data)
+    print (data)
     x=open(config_file+'data77.txt','w')
     x.write(data)
     x.close()
@@ -109,12 +117,15 @@ def writeuserdata_init():
     print (dir(user_g))
     
 
-    x = ' { "username":"kevincwulff@gmail.com", "password":"nope", "city":"lasvegas","ios":"False","usecache":"True","pcolor":"Black","scolor":"White"}'
+    x = ' { "username":"kevincwulff@gmail.com", "password":"nope", "city":"lasvegas","ios":"False","usecache":"1","pcolor":"Black","scolor":"White","debug","True"}'
     y = json.loads(x)
     #y = json.dumps(x)
     with open(config_file+'data77.txt', 'w') as outfile:
         json.dump(y, outfile)
     print ('writedata')
+
+
+
 
 def readuserdata():
     with open(config_file+'data77.txt') as json_file:
@@ -128,7 +139,8 @@ def readuserdata():
         print (usecache,'usecachewtf')
         pcolor=(data['pcolor'])
         scolor=(data['scolor'])
-        return username,password,location,isios,usecache,pcolor,scolor
+        debug=(data['debug'])
+        return username,password,location,isios,usecache,pcolor,scolor,debug
 try:
     temp=open(config_file+'data77.txt','r')
     temp.close()
@@ -137,10 +149,15 @@ except:
     print ('writing new data')
     writeuserdata_init()
 
-username,password,location,isios,usecache,pcolor,scolor=readuserdata()
+
+username,password,location,isios,usecache,pcolor,scolor,debug=readuserdata()
 user_g=username
 pass_g=password
 loc_g=location
+usecache_g=usecache
+pcolor_g=pcolor
+scolor_g=scolor
+debug_g=debug
 
 
 
@@ -185,21 +202,22 @@ if 1==1:
 conf=False
 mj=[]
 mj2=[]
+mj3=[]
 l=[]
 index=3
 gindex=99
 ad=''
 au=''
-first_color_g=(.0, 0.9, .1, .3)
-second_color_g=(.0, 0.8, .1, .3)
+#first_color_g=(.0, 0.9, .1, .3)
+#second_color_g=(.0, 0.8, .1, .3)
 #third color text
 #first color backgrounds
-rhino_color_hex='#f7941c'
-first_color_g=kivy.utils.get_color_from_hex('#232323')
-second_color_g=kivy.utils.get_color_from_hex('#343434')
-third_color_g=kivy.utils.get_color_from_hex('#aaaaaa')
-fourth_color_g=kivy.utils.get_color_from_hex('#aaaaaa')
-rhino_color_g=kivy.utils.get_color_from_hex(rhino_color_hex)
+#rhino_color_hex='#f7941c'
+#first_color_g=kivy.utils.get_color_from_hex('#232323')
+#second_color_g=kivy.utils.get_color_from_hex('#343434')
+#third_color_g=kivy.utils.get_color_from_hex('#aaaaaa')
+#fourth_color_g=kivy.utils.get_color_from_hex('#aaaaaa')
+#rhino_color_g=kivy.utils.get_color_from_hex(rhino_color_hex)
 
 
 
@@ -207,7 +225,7 @@ rhino_color_g=kivy.utils.get_color_from_hex(rhino_color_hex)
 
 
 
-usecache=True
+
 
 import os
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -218,7 +236,7 @@ def login(self):
 
         #app = App.get_running_app()
         #print("app.directory = ", app.directory)
-        usecache=bool(usecache)
+        #usecache=bool(usecache)
         print (type(usecache),usecache,'usecache2')
         
 
@@ -226,7 +244,9 @@ def login(self):
         #    print ('using fake data')
         #if usecache==False:
         print (username,password,location,'lolsecurity')
-        if usecache==False:
+        if usecache==1:
+            print ('using cache')
+        if usecache==3:
             print ("using real data")
             ssl.verify = False
             
@@ -277,17 +297,16 @@ def login(self):
                     'fauil', i
 
 
-            parse('junk')
-        #except:
-        if usecache==True:
-            print ('lolfail')
-            parse('junk2')
+        parse('junk')
+
+
 
 
 
 def parse(aa):
     global mj
     global mj2
+    global mj3
     global l
     #print ('google')
 
@@ -310,6 +329,8 @@ def parse(aa):
     dd={}
     mj=[]
     mj2=[]
+    mj3=[]
+    joob3=[]
 
     
 
@@ -379,6 +400,7 @@ def parse(aa):
 
     for q in range(len(d)):
         em=''
+        joob3=[]
         
         if p[q]=="ME":
             print ('omg ME🔌')
@@ -391,7 +413,7 @@ def parse(aa):
             em=em+(emoji.emojize(':ice_hockey:'))
         if 'MGM' in l[q]:
             em=em+(emoji.emojize(':lion:'))
-            
+        rhino_color_hex='000000'
         #mjp.append d[q]
         #mjp.append ti[q]
         print (d[q])
@@ -401,14 +423,14 @@ def parse(aa):
             month,date,year=str.split(d[q],'/')
             month=str(int(month))
             #print (n[q],'wtfyouass')
-        except:
+        #except:
             ''
             #print (d[q],'shit')
-        try:
-            if 'onfirmed' in n[q]:
+        #try:
+        #    if 'onfirmed' in n[q]:
 
                 #print ('omg its confirmed')
-                n[q]='[color='+rhino_color_hex+']'+n[q]+'[/color]'
+           #     n[q]='[color='+rhino_color_hex+']'+n[q]+'[/color]'
         except:
             ''
         try:
@@ -416,29 +438,31 @@ def parse(aa):
         except:
             showreal=s[q]
         #joob='[color=ff3333]'+d[q]+'[/color] '+ti[q]+' ~ '+v[q]+' ~ '+l[q]+' ~ '+ti[q]+' ~  '+c[q]+' ~ '+ty[q]+' ~ '+p[q]+' ~ '+st[q]+' ~ '+j[q]+' ~ '+n[q]
-        try:
+        
+        #try:
+        if 0==0:
             joob=d[q]+' '+ti[q]+' ~ '+v[q]+' ~ '+l2[q]+' ~ '+s[q]+' ~ \n '+c[q]+' ~ '+ty[q]+' ~ '+p[q]+' ~ '+st[q]+' ~ '+j[q]+' ~ '+n[q]
             joob2='[color='+rhino_color_hex+']'+month+'/'+date+'[/color] '+ti[q]+'  '+' \n[b]'+showreal+'[/b]  \n'+v[q]+'\n[size=40]'+ty[q]+'  '+p[q]+em+'  '+st[q]+'  '+n[q]
-        except:
-            ''
+            joob3.append(month)
+            joob3.append(date)
+            joob3.append(v[q])
+            joob3.append(ti[q])
+            joob3.append(showreal)
+            joob3.append(v[q])
+            joob3.append(p[q])
+            joob3.append(em)
+            joob3.append(st[q])
+            joob3.append(n[q])
+        #print (joob2)
+        #print (len(joob3),'job3len')
+
+        #except:
+        #    ''
         mj.append(joob)
         mj2.append(joob2)
+        mj3.append(joob3)
 
-        #print (joob)
-        #mdict={'text': [mj]}
-        #dd.update(mdict)
-        #check(joob,d[q],ti[q],v[q],l[q],s[q],ty[q],st[q],p[q],n[q],c[q],em)
-    #self.data = [{'text': str(x)} for x in range(10)]
-#root.RV.data=5
-    #print (dir(App.get_running_app().root.ids),'junk')
-    #print (dir(App.get_running_app().root),'lol')
-    #print (dir(App.get_running_app().root.get_screen('RVScreen')))
-    #$print ((App.get_running_app().root.get_screen('RVScreen').ids))
-    #root = App.get_running_app().root
-    #print (root.ids.viewkeys)
-    #self.data.ids.RVScreen.ids.password.text = str('asdf')
-    my_dict = {"name": "XYZ", "email": "xyz@gmail.com", "location":"Mumbai"}
-    #print (dd)
+        print (len(mj3),'lenmj')
 
 
 Builder.load_string('''
@@ -552,7 +576,8 @@ Builder.load_string('''
             #text: '[color=ff3333]Think[/color]'
             #text: 'ThINK'
             text: 'think'
-            color: root.rhino_color
+            color: app.theme_cls.primary_dark
+            
             markup: True
             #spacing:500
             font_name: 'zuume2.ttf'
@@ -563,7 +588,7 @@ Builder.load_string('''
             font_size: dp(100)
             text: "RHINO"
             #text: (emoji.emojize(":red_heart:"))
-            color: root.rhino_color
+            color: app.theme_cls.primary_dark
             font_name: 'zuume2.ttf'
             #spacing:500
 
@@ -589,7 +614,7 @@ Builder.load_string('''
             #halign: 'center'
             text: 'Schedule'
             text_color: 'white'
-            md_bg_color: root.rhino_color
+            #md_bg_color: root.rhino_color
 
             user_font_size: dp(80)
             on_release: 
@@ -672,10 +697,20 @@ Builder.load_string('''
             orientation: "horizontal"
             MDLabel:
                 color: app.theme_cls.primary_light
-                text: 'option2'
+                text: 'Dark Mode'
                 
-            MDSwitch:
-                width: dp(55)
+            MDBoxLayout:
+                adaptive_size: True
+                orientation: "horizontal"
+
+                MyToggleButton:
+                    text: "Dark"
+                    group: "y"
+                    on_press: app.mode('Dark')
+                MyToggleButton:
+                    text: "Light"
+                    group: "y"
+                    on_press: app.mode('Light')
         MDCard:
             padding: dp(20)
             md_bg_color: .1,.1,.1, .7
@@ -683,23 +718,75 @@ Builder.load_string('''
             orientation: "horizontal"
             MDLabel:
                 color: app.theme_cls.primary_light
-                text: 'option3'
+                text: 'Primary Color'
+
+            MDBoxLayout:
+                adaptive_size: True
+                pos_hint: {"center_x": .5, "center_y": .5}
+
                 
-            MDSwitch:
-                valighn: 'center'
-                padding: dp(50),dp(70)
-                width: dp(45)
+                MDBoxLayout:
+                    adaptive_size: True
+                    orientation: "vertical"
+
+                    MyToggleButton:
+                        text: "Orange"
+                        group: "x"
+                        on_press: app.color('Orange')
+                    MyToggleButton:
+                        text: "Blue"
+                        group: "x"
+                        on_press: app.color('Blue')
+
+
+                MDBoxLayout:
+                    adaptive_size: True
+                    orientation: "vertical"
+
+                    MyToggleButton:
+                        text: "Red"
+                        group: "x"
+                        color: "Red"
+                        on_press: app.color('Red')
+                    MyToggleButton:
+                        text: "Green"
+                        group: "x"
+                        on_press: app.color('Green')
+
+                MDBoxLayout:
+                    adaptive_size: True
+                    orientation: "vertical"
+
+                    MyToggleButton:
+                        text: "Amber"
+                        group: "x"
+                        on_press: app.color('Amber')
+                    MyToggleButton:
+                        text: "Gray"
+                        group: "x"
+                        on_press: app.color('Gray')
+
+
+                
         MDCard:
             md_bg_color: .1,.1,.1, .9
             padding: dp(20)
             orientation: "horizontal"
             MDLabel:
                 color: app.theme_cls.primary_light
-                text: 'option4'
+                text: root.usecache2
+                
+                
                 
             MDSwitch:
                 width: dp(20)
                 padding: dp(30)
+                id:usecachetoggle
+                active: root.usecache3
+                #rgba: root.first_color if root.font_size > root.ff else root.second_color
+                on_active: 
+                    app.on_checkbox_active(*args)
+                    root.updatetext()
 
         BoxLayout:
             
@@ -866,7 +953,7 @@ Builder.load_string('''
         Color:
             #rgba: (.0, 0.9, .1, .3) if self.selected else (0, 0, 0, 1)
             #rgba: (.1, .1, .1, 1) if root.font_size > root.ff else (0,0,0, 1)
-            rgba: root.first_color if root.font_size > root.ff else root.second_color
+            rgba: app.theme_cls.primary_light if root.font_size > root.ff else app.theme_cls.primary_dark
         
             
         Rectangle:
@@ -1135,7 +1222,6 @@ class CustomScreen(Screen):
     global rhino_color_g
     global rhino_x_g
     global rhino_y_g
-    rhino_color=rhino_color_g
 
     rhino_x=rhino_x_g/2
 
@@ -1185,11 +1271,11 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
     ''' Add selection support to the Label '''
     global index
     global f_size
-    global first_color_g
-    global second_color_g
+    #global first_color_g
+    #global second_color_g
 
-    first_color=first_color_g
-    second_color=second_color_g
+    #first_color=theme_cls.primary_dark
+    #second_color=theme_cls.primary_light
     
     #index = None
     ff=f_size
@@ -1238,7 +1324,12 @@ mj2=(Convert(mj))
 
 
 
+class MyToggleButton(MDRectangleFlatButton, MDToggleButton):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        #self.background_down = self.theme_cls.primary_light
 
+        print ('themes')
 class RV(RecycleView):
     
     #global mj
@@ -1264,24 +1355,34 @@ class RV(RecycleView):
         #self.data = [{'text': str(x)} for x in range(1)]
         #print (type(mj2),'wtff')
         #self.data=mj2
+        #self.data=[]
         self.data = [{'text': str(x),'text':'wow'} for x in range(len(mj))]
         #print (mj2,'MOTHERUFCKER')
         #self.change_line()
         odd=0
-        try:
-            for i in range(len(mj)):
+        if 1==1:
+            print (mj3)
+            for i in range(len(mj3)):
                 odd=odd+1
-                self.data[i]={'text': mj2[i]}
-                if odd%2==0:
-                    pass
-                    self.data[i]={'text': mj2[i],'color':third_color_g,'font_size':f_size}
-                if odd%2==1:
-                    pass
-                    self.data[i]={'text': mj2[i],'color':fourth_color_g,'font_size':f_size+.01}
+                #print (mj3[i])
+                #joob2='[color='+rhino_color_hex+']'+month+'/'+date+'[/color] '+ti[q]+'  '+' \n[b]'+showreal+'[/b]  \n'+v[q]+'\n[size=40]'+ty[q]+'  '+p[q]+em+'  '+st[q]+'  '+n[q]
 
-                    print ('DISPLAY DATA')
-        except:
-            print ('keyerror')
+
+
+                texta=mj3[i][0]+'/'+mj3[i][1]+' '+mj3[i][2]+' '+'\n[b]'+mj3[i][4]+'\n[/b]\n'+mj3[i][5]+'\n'+mj3[i][6]+' '+mj3[i][8]+' '+mj3[i][9]
+
+                #self.data[i]={'text': texta}
+                #self.data[i]={'text': mj2[i]}
+                if odd%2==0:
+                #    pass
+                    self.data[i]={'text': texta,'color':app.theme_cls.primary_light,'font_size':f_size}
+                if odd%2==1:
+                #    pass
+                    self.data[i]={'text': texta,'color':app.theme_cls.primary_dark,'font_size':f_size+.01}
+
+                    #print ('DISPLAY DATA')
+        #except:
+        #    print ('keyerror')
     #login()
     def change_line(self):
         self.data[0] = '101'
@@ -1363,11 +1464,41 @@ class LogIn(Screen):
         writeuserdata()
 
 class Options(Screen):
+
+    def switch_callback(self, switchObject, switchValue):
+
+        if(switchValue):
+            print('Switch is ON:):):)')
+        else:
+            print('Switch is OFF:(:(:(')
+
+    def updatetext(self):
+        global usecache_g
+        print (usecache,usecache_g,'usecacheupdatetext')
+        #print (get_screen('Options').ids.usecachetoggle.text)
+        #print(self.root.get_screen('Options').ids)
+        #print (self.manager.get_screen('Options').ids)
+
+
+
+
     global username
     username2=username
+    global usecache
+    usecache2='FALURE'
+    usecache3=True
+    
+    if usecache==1:
+        usecache2="Demo Mode On"
+        usecache3=True
+    if usecache==0:
+        usecache2="Demo Mode Off"
+        usecache3=False
+    #usecache2=str(usecache)
+    print (usecache,'OMGLOLs')
     locations=['lasvegas','notlasvegas']
 
-    custom_font_color=(.9,0,.9,.9)
+    custom_font_color=(.9,.5,.9,.9)
     #color: app.theme_cls.primary_light
     def open_popup(self):
         pops = MyPopup()
@@ -1402,6 +1533,65 @@ class Content(Screen):
 
 #title=str( l[(gindex*14)]+' '+l[(gindex*14)+1]+'\nwow\n\n\n\nhello'),
 class ScreenManagerApp(MDApp):
+    #first_color=root.theme_cls.primary_color
+    #second_color=root.theme_cls.primary_color
+    def dialog_close(self, *args):
+        self.theme_cls.primary_palette=old_color
+        self.dialog.dismiss(force=True)
+    def buyapp(self, *args):
+        webbrowser.open('http://kevinwulff.com/app')
+        
+        
+    def mode(self,x):
+        self.theme_cls.theme_style = x
+
+    def color(self,x):
+        first_color=self.theme_cls.primary_color
+        second_color=self.theme_cls.primary_color
+        old_color=self.theme_cls.primary_palette
+        self.theme_cls.primary_palette = x
+
+        if not self.dialog:
+            self.dialog = MDDialog(
+                text="Only In Premium Version",
+                buttons=[
+                    MDFlatButton(
+                        text="CANCEL", text_color=self.theme_cls.primary_color,on_release=self.dialog_close
+                    ),
+                    MDRaisedButton(
+                        text="BUY!",on_release=self.buyapp
+                    ),
+                ],
+            )
+        self.dialog.open()
+
+        
+
+
+
+
+        global pcolor_g
+        pcolor_g=x
+        writeuserdata()
+
+
+        
+
+    def on_checkbox_active(self, checkbox, value):
+        global usecache_g
+        if value:
+            print('The checkbox', checkbox, 'is active', 'and', checkbox.state, 'state')
+            usecache=1
+            usecache_g=1
+            print (usecache,usecache_g)
+            writeuserdata()
+        else:
+            print('The checkbox', checkbox, 'is inactive', 'and', checkbox.state, 'state')
+            usecache=0
+            usecache_g=0
+            print (usecache,usecache_g)
+            writeuserdata()
+
     
 
     def dialog_close(self, *args):
@@ -1443,7 +1633,7 @@ class ScreenManagerApp(MDApp):
     print (rloc,'rloc')
         
     def build(self):
-        self.theme_cls.primary_palette = "Orange" 
+        self.theme_cls.primary_palette = pcolor
         
         root = ScreenManager(transition=FadeTransition())
         #sm = ScreenManager(transition=WipeTransition())
