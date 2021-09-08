@@ -1,6 +1,7 @@
 debug=False
 ios=False
 
+from logging import NOTSET
 import os
 from appdirs import *
 appname = ""
@@ -326,44 +327,128 @@ def parse(aa):
     n=[]
     tk=[]
     pl=[]
+    p2=[]
     dd={}
     mj=[]
     mj2=[]
     mj3=[]
     joob3=[]
+    l2=[]
 
     
 
 
     #if usecache==True:
     #    print ('asdfasdfasdf')
-    aaa=open(ad+'/4cache.html','r')
+    if usecache==0:
+        aaa=open(ad+'/4cache.html','r')
     #    print (aaa,'2asdf')
-    #if usecache==True:
+    if usecache==1:
     #    print ('using cache data')
-    #    aaa=open(ad+'/conf.html','r')
+        aaa=open(ad+'/conf.html','r')
 
 
     #ab=aaa.read()
     soup = BeautifulSoup(aaa, 'html.parser')
 
-    ab=(soup.find_all('td'))
+    ab=(soup.find_all('tr'))
+    #print (len(ab),'wowman')
     dn=15
     dm=dn-1
+
+
+
+    fullnj=[]
+    for i in range(len(ab)):
+        nj=[]
+        #print (ab[i])
+        ax=(ab[i].find_all('td'))
+        #print ((ax))
+
+
+
+        date= (ax[0].get_text())
+        time=(ax[1].get_text())
+        jobid=(ax[2].get_text())
+        show=(ax[3].get_text())
+        venue=(ax[4].get_text())
+        locationclient=(ax[5].get_text())
+        typeposition=(ax[6].get_text())
+        details=(ax[7].get_text())
+        
+        status=(ax[8].get_text())
+        notes=(ax[9].get_text())
+        tk=(ax[10].get_text())
+        conf=(ax[11].get_text())
+
+
+        nj.append (ax[0].get_text())
+        nj.append(ax[1].get_text())
+        nj.append(ax[2].get_text())
+        nj.append(ax[3].get_text())
+        nj.append(ax[4].get_text())
+        nj.append(ax[5].get_text())
+        nj.append(ax[6].get_text())
+        nj.append(ax[7].get_text())
+        
+        nj.append(ax[8].get_text())
+        nj.append(ax[9].get_text())
+        nj.append(ax[10].get_text())
+        nj.append(ax[11].get_text())
+        nj.append(ax[12].get_text())
+        if 'dgR' in str(ax[13]):
+            xx=str(ax[13])
+            f=str.split(xx,'"')
+            print (f[3])
+            nj.append(f[3])
+        #nj.append(ax[13])
+        #try:
+        #    nj.append(ax[14])
+        #except:
+        #    pass
+        #    #print ('fuckingfail')
+        #try:
+        #    nj.append(ax[15])
+        #except:
+         #   print ('fuckingfail2')
+
+
+
+
+
+
+        mj3.append(nj)
+
+        print (nj)
+        
+
     
     #for i in range(15,len(ab)-15):
     for i in range(dn,len(ab)-dn):
         asds= str(ab[i].contents)
-        if 'input name' not in asds:
+        #print (asds)
+        if 'input2 name' not in asds:
 
 
             l.append( (ab[i].get_text()))
+            #print (l,'wtfdude')
+        if 'inpu3t name' in asds:
+            l.append(str(ab[i]))
+
+
+    #print (l,'li77sttt')
+    #print (l2,'l2')
         
 
 
 
     
     for z in range(len(l)):
+        #print (l[z],'listtt')
+        if z%dm==0:
+            print (l[z],'firstone')
+        '''
+        
 
 
         if z%dm==0:
@@ -394,6 +479,8 @@ def parse(aa):
             tk.append(l[z])
         if z%dm==12:
             pl.append(l[z])
+        #if z%dm==13:
+            #p2.append(l[z])
 
 
 
@@ -413,6 +500,7 @@ def parse(aa):
             em=em+(emoji.emojize(':ice_hockey:'))
         if 'MGM' in l[q]:
             em=em+(emoji.emojize(':lion:'))
+            
         rhino_color_hex='000000'
         #mjp.append d[q]
         #mjp.append ti[q]
@@ -453,16 +541,19 @@ def parse(aa):
             joob3.append(em)
             joob3.append(st[q])
             joob3.append(n[q])
+            joob3.append(tk[q])
+            joob3.append(pl[q])
+            '''
         #print (joob2)
         #print (len(joob3),'job3len')
 
         #except:
         #    ''
-        mj.append(joob)
-        mj2.append(joob2)
-        mj3.append(joob3)
+        #mj.append(joob)
+        #mj2.append(joob2)
+        #mj3.append(joob3)
 
-        print (len(mj3),'lenmj')
+        #print (len(mj3),'lenmj')
 
 
 Builder.load_string('''
@@ -971,7 +1062,7 @@ Builder.load_string('''
     #text_size: self.size
     text_size : self.width, None
     #halign:'left'
-    #width: 9000
+    width: 9000
     markup: True
     
                                     
@@ -990,17 +1081,18 @@ Builder.load_string('''
 
     SelectableRecycleBoxLayout:
         spacing: dp(15)
-        padding: dp(10)
+        #padding: dp(10)
         canvas:
             #backgroundcolorforreal
             Color:
                 rgba:0,0,0,.1
             Rectangle:
-                pos: self.pos
-                size: self.size
+                #pos: self.pos
+                #size: self.size
             
         #font_size: dp(196)
-        default_size: dp(335), dp(20)
+        default_size: None, dp(20)
+        default_size_hint: 1, None
         #default_size: 6000, dp(30)
         #default_size_hint: 5000,dp(64)
         size_hint_y: None
@@ -1082,7 +1174,19 @@ Builder.load_string('''
                 on_release:
                     #root.wow()
                     #root.manager.current = 'menu'
-                    app.show_alert_dialog()
+                    #app.show_alert_dialog()
+
+            MDFillRoundFlatButton:
+                icon: "information-outline"
+                text: 'Confirm'
+                #root.wow()
+                size_hint: None, None
+                size: 150,150
+                #on_release: root.manager.current = 'Info23'
+                on_release:
+                    #root.wow()
+                    #root.manager.current = 'menu'
+                    app.show_confirm_dialog()
 
 <MenuScreen>:
     canvas:
@@ -1313,7 +1417,9 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
         
 
 xxx=[{'text':'hello'},{'text':'bye'}]
-
+def Confirm(self):
+    print ('omgheconfirmed')
+    print (mj3[gindex])
 def Convert(lst):
     res_dct = {lst[i]: lst[i + 1] for i in range(0, len(lst), 2)}
     return res_dct
@@ -1356,20 +1462,22 @@ class RV(RecycleView):
         #print (type(mj2),'wtff')
         #self.data=mj2
         #self.data=[]
-        self.data = [{'text': str(x),'text':'wow'} for x in range(len(mj))]
+        self.data = [{'text': str(x),'text':'HELLO RHINO'} for x in range(1,len(mj3))]
         #print (mj2,'MOTHERUFCKER')
         #self.change_line()
         odd=0
         if 1==1:
             print (mj3)
-            for i in range(len(mj3)):
+            for i in range(1,len(mj3)-1):
                 odd=odd+1
                 #print (mj3[i])
                 #joob2='[color='+rhino_color_hex+']'+month+'/'+date+'[/color] '+ti[q]+'  '+' \n[b]'+showreal+'[/b]  \n'+v[q]+'\n[size=40]'+ty[q]+'  '+p[q]+em+'  '+st[q]+'  '+n[q]
 
 
 
-                texta=mj3[i][0]+'/'+mj3[i][1]+' '+mj3[i][2]+' '+'\n[b]'+mj3[i][4]+'\n[/b]\n'+mj3[i][5]+'\n'+mj3[i][6]+' '+mj3[i][8]+' '+mj3[i][9]
+                texta=mj3[i][0]+'/'+mj3[i][1]+' '+mj3[i][3]+' '+'\n[b]'+mj3[i][4]+'\n[/b]\n'+mj3[i][5]+'\n'+mj3[i][8]+' '+mj3[i][7]+' '+mj3[i][10]
+                #texta=mj3[i][0]
+                texta=str(texta)
 
                 #self.data[i]={'text': texta}
                 #self.data[i]={'text': mj2[i]}
@@ -1609,6 +1717,25 @@ class ScreenManagerApp(MDApp):
         locations.append((locations2[i+1]))
     locations=locations3
     dialog = None
+
+    def show_confirm_dialog(self):
+        print (gindex,'realindex')
+        if not self.dialog:
+            self.dialog = MDDialog(
+                text=mj3[gindex][0]+' '+mj3[gindex][1]+'\n'+mj3[gindex][3]+'\n'+mj3[gindex][4]+' \n'+mj3[gindex][7]+' '+mj3[gindex][8],
+                buttons=[
+                    MDFlatButton(
+                        text="CANCEL", text_color=self.theme_cls.primary_color,on_release=self.dialog_close
+                    ),
+                    MDRaisedButton(
+                        text="Confirm!",on_release=Confirm
+                    ),
+                ],
+            )
+        self.dialog.open()
+
+
+
     def show_alert_dialog(self):
         
     
