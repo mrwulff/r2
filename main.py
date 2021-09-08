@@ -1,5 +1,5 @@
 debug=False
-ios=True
+ios=False
 
 import os
 from appdirs import *
@@ -50,6 +50,11 @@ from kivymd.uix.card import MDCard
 from kivymd.uix.label import MDLabel
 from kivy.properties import ObjectProperty
 from kivymd.uix.taptargetview import MDTapTargetView
+from kivymd.uix.dialog import  MDDialog
+from kivymd.uix.button import MDFlatButton
+
+
+
 
 from kivy.core.window import Window
 from os.path import expanduser
@@ -104,7 +109,7 @@ def writeuserdata_init():
     print (dir(user_g))
     
 
-    x = ' { "username":"test", "password":"30", "city":"lasvegas","ios":"False","usecache":"True","pcolor":"Black","scolor":"White"}'
+    x = ' { "username":"kevincwulff@gmail.com", "password":"nope", "city":"lasvegas","ios":"False","usecache":"True","pcolor":"Black","scolor":"White"}'
     y = json.loads(x)
     #y = json.dumps(x)
     with open(config_file+'data77.txt', 'w') as outfile:
@@ -202,7 +207,7 @@ rhino_color_g=kivy.utils.get_color_from_hex(rhino_color_hex)
 
 
 
-
+usecache=True
 
 import os
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -221,8 +226,7 @@ def login(self):
         #    print ('using fake data')
         #if usecache==False:
         print (username,password,location,'lolsecurity')
-        #if usecache==False:
-        if 1==1:
+        if usecache==False:
             print ("using real data")
             ssl.verify = False
             
@@ -306,15 +310,14 @@ def parse(aa):
     dd={}
     mj=[]
     mj2=[]
-    off=[]
 
     
 
 
-    if usecache==True:
-        print ('asdfasdfasdf')
-        aaa=open(ad+'/4cache.html','r')
-        print (aaa,'2asdf')
+    #if usecache==True:
+    #    print ('asdfasdfasdf')
+    aaa=open(ad+'/4cache.html','r')
+    #    print (aaa,'2asdf')
     #if usecache==True:
     #    print ('using cache data')
     #    aaa=open(ad+'/conf.html','r')
@@ -337,7 +340,7 @@ def parse(aa):
         
 
 
-    print (l,'onelasttime')
+
     
     for z in range(len(l)):
 
@@ -370,9 +373,7 @@ def parse(aa):
             tk.append(l[z])
         if z%dm==12:
             pl.append(l[z])
-        if z%dm==13:
-            off.append(l[z])
-    print ('lololol',off)
+
 
 
 
@@ -411,24 +412,15 @@ def parse(aa):
         except:
             ''
         try:
-            print (off(q),'p11')
-        except:
-            ''
-        try:
             showjunk,showreal=str.split(s[q],') ')
         except:
             showreal=s[q]
         #joob='[color=ff3333]'+d[q]+'[/color] '+ti[q]+' ~ '+v[q]+' ~ '+l[q]+' ~ '+ti[q]+' ~  '+c[q]+' ~ '+ty[q]+' ~ '+p[q]+' ~ '+st[q]+' ~ '+j[q]+' ~ '+n[q]
         try:
-            joob=d[q]+' '+ti[q]+' ~ '+v[q]+' ~ '+l2[q]+' ~ '+s[q]+' ~ \n '+c[q]+' ~ '+ty[q]+' ~ '+p[q]+' ~ '+st[q]+' ~ '+j[q]+' ~ '+n[q]+ ' ~ '+off[q]
+            joob=d[q]+' '+ti[q]+' ~ '+v[q]+' ~ '+l2[q]+' ~ '+s[q]+' ~ \n '+c[q]+' ~ '+ty[q]+' ~ '+p[q]+' ~ '+st[q]+' ~ '+j[q]+' ~ '+n[q]
             joob2='[color='+rhino_color_hex+']'+month+'/'+date+'[/color] '+ti[q]+'  '+' \n[b]'+showreal+'[/b]  \n'+v[q]+'\n[size=40]'+ty[q]+'  '+p[q]+em+'  '+st[q]+'  '+n[q]
         except:
             ''
-        if 'aken off call' in off[q]:
-            joob2="[color=red]"+joob2+' '+off[q]+"[/color]"
-            
-        
-        print (joob)
         mj.append(joob)
         mj2.append(joob2)
 
@@ -1001,8 +993,9 @@ Builder.load_string('''
                 size: 150,150
                 #on_release: root.manager.current = 'Info23'
                 on_release:
-                    root.wow()
-                    root.manager.current = 'menu'
+                    #root.wow()
+                    #root.manager.current = 'menu'
+                    app.show_alert_dialog()
 
 <MenuScreen>:
     canvas:
@@ -1115,6 +1108,21 @@ Builder.load_string('''
             size_hint: None, None
             size: 150, 50
             on_release: root.manager.current = 'RVScreen'
+<Content>:
+    MDFillRoundFlatButton:
+        icon: "information-outline"
+        id: cbutton
+        text: 'Info'
+        #root.wow()
+        size_hint: None, None
+        size: 150,150
+        #on_release: root.manager.current = 'Info23'
+        on_release:
+            #root.wow()
+            #root.manager.current = 'menu'
+            root.confirm_show()
+
+                    
 ''')
 
 
@@ -1375,6 +1383,9 @@ class Options(Screen):
             print("\tcolor(hex)={}".format(instance.hex_color))
             print("\tcolor(hsv)={}".format(instance.hsv))
 
+
+def cshow():
+    print('toplevelthing')
 class MenuScreen(Screen):
     print (index)
     def __init__(self, **kwargs):
@@ -1382,9 +1393,22 @@ class MenuScreen(Screen):
         print (gindex,'OMGWTFMAN')
     
 
+class Content(Screen):
+    def confirm_show(self): 
+        print ('confirming show')
+        cshow()
+        
+        
 
-
+#title=str( l[(gindex*14)]+' '+l[(gindex*14)+1]+'\nwow\n\n\n\nhello'),
 class ScreenManagerApp(MDApp):
+    
+
+    def dialog_close(self, *args):
+        '''
+        Close popup on Done click
+        '''
+        self.dialog.dismiss()
     rloc=[]
     locations=[]
     locations2=['denver', 'Colorado','dc', 'DC','florida' , 'Florida','georgia' , 'Georgia','indiana' , 'Indiana','kentucky' , 'Kentucky','lasvegas' , 'Las Vegas','losangeles' , 'Los Angeles' ,'louisiana' , 'Louisiana','michigan' , 'Michigan','minnesota' , 'Minnesota','missouri' , 'Missouri','mississippi' , 'Mississippi','montana' , 'Montana','newmexico' , 'New Mexico','northerncalifornia' , 'Northern California' ,'northwest' , 'Northwest','ohio' , 'Ohio','reno' , 'Reno','california' , 'San Diego','southcarolina' , 'South Carolina','tempe' , 'Tempe','memphis' , 'Tennessee','texas' , 'Texas','tucson' , 'Tucson','wisconsin' , 'Wisconsin',]
@@ -1394,6 +1418,22 @@ class ScreenManagerApp(MDApp):
         rloc.append( (locations2[i]))
         locations.append((locations2[i+1]))
     locations=locations3
+    dialog = None
+    def show_alert_dialog(self):
+        
+    
+
+        if not self.dialog:
+            self.dialog = MDDialog(
+                title="Reset settings?",
+                text="This will reset your device to its default factory settings.",
+                type="custom",
+                content_cls=Content(),
+                
+            )
+        self.dialog.open()
+    def confirm_show(self):
+        print ('confirming show')
     def saveconfig(self):
         print ('wowow')
         #((self.root.screens[4].username2))='bob'
