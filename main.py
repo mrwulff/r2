@@ -58,6 +58,10 @@ from kivymd.uix.button import MDRectangleFlatButton
 from kivymd.uix.button import MDRaisedButton
 
 
+import datetime
+import humanize
+
+
 
 
 from kivy.core.window import Window
@@ -82,6 +86,8 @@ from kivy.config import Config
 user_g=''
 pass_g=''
 loc_g=''
+firstName=''
+lastName=''
 
 
 
@@ -118,7 +124,7 @@ def writeuserdata_init():
     print (dir(user_g))
     
 
-    x = ' { "username":"kevincwulff@gmail.com", "password":"nope", "city":"lasvegas","ios":"False","usecache":"1","pcolor":"Black","scolor":"White","debug","True"}'
+    x = ' { "username":"kevincwulff@gmail.com", "password":"nope", "city":"lasvegas","ios":"False","usecache":"1","pcolor":"Black","scolor":"White","debug":"True"}'
     y = json.loads(x)
     #y = json.dumps(x)
     with open(config_file+'data77.txt', 'w') as outfile:
@@ -302,6 +308,54 @@ def login(self):
 
 
 
+def createcache():
+
+
+    x = datetime.datetime.now()
+    t=(x.strftime("%m"))+'/'+(x.strftime("%d"))+'/'+(x.strftime("%Y"))
+    todays=t
+    x= (datetime.date.today() + datetime.timedelta(days=-1))
+    t=(x.strftime("%m"))+'/'+(x.strftime("%d"))+'/'+(x.strftime("%Y"))
+    yesterdays=t
+
+    x= (datetime.date.today() + datetime.timedelta(days=+1))
+    t=(x.strftime("%m"))+'/'+(x.strftime("%d"))+'/'+(x.strftime("%Y"))
+    nexts=t
+
+    x= (datetime.date.today() + datetime.timedelta(days=+10))
+    t=(x.strftime("%m"))+'/'+(x.strftime("%d"))+'/'+(x.strftime("%Y"))
+    confs=t
+
+
+    yesterday="""<tr>
+			<td class="cell-noborder">"""+yesterdays+"""</td><td class="cell-noborder" style="width:10px;">07:00</td><td class="cell-noborder">24123</td><td class="cell-noborder">(GGA) PAPARAZZI</td><td class="cell-noborder">MGM GRAND GARDEN ARENA</td><td class="cell-noborder">MEET AT LOADING DOCK</td><td class="cell-noborder">MGM RESORTS</td><td class="cell-noborder">SHOW</td><td class="cell-noborder">HL</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder">Confirmed</td><td class="cell-noborder-wide">HARD HAT, VEST, GLOVES, FULL ANKLE STEEL/COMP BOOT; BRING PARKING STUB TO SUP ONSITE; ALL A3 ,L3, & V3 NEED TO BE CATWALK CAPABLE</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder-wide">&nbsp;</td>
+		</tr>"""
+
+    today="""<tr class="whiterow">
+			<td class="cell-noborder">"""+todays+"""</td><td class="cell-noborder" style="width:10px;">06:00</td><td class="cell-noborder">24152</td><td class="cell-noborder">(TM) GEORGE STRAIT</td><td class="cell-noborder">T-MOBILE ARENA</td><td class="cell-noborder">LOADING DOCK</td><td class="cell-noborder">MGM RESORTS</td><td class="cell-noborder">IN</td><td class="cell-noborder">L</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder">Confirmed</td><td class="cell-noborder-wide">MASKS, HARD HATS, SAFETY VESTS, GLOVES, AND FULL ANKLE PROTECTIVE TOE BOOTS</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder-wide">&nbsp;</td>
+		</tr>"""
+    next="""<tr>
+			<td class="cell-noborder" style="background-color:Gray;">"""+nexts+"""</td><td class="cell-noborder" style="background-color:Gray;width:10px;">08:00</td><td class="cell-noborder" style="background-color:Gray;">24150</td><td class="cell-noborder" style="background-color:Gray;">(PT) HOUSE </td><td class="cell-noborder" style="background-color:Gray;">PARK THEATRE</td><td class="cell-noborder" style="background-color:Gray;">PARK MGM LAS VEGAS</td><td class="cell-noborder" style="background-color:Gray;">MGM RESORTS</td><td class="cell-noborder" style="background-color:Gray;">IN</td><td class="cell-noborder" style="background-color:Gray;">L3</td><td class="cell-noborder" style="background-color:Gray;">&nbsp;</td><td class="cell-noborder" style="background-color:Gray;">Confirmed</td><td class="cell-noborder-wide" style="background-color:Gray;">WORKING W/ JESSE</td><td class="cell-noborder" style="background-color:Gray;">&nbsp;</td><td class="cell-noborder-wide">&nbsp;</td>
+		</tr>"""
+
+    conf="""<tr>
+			<td class="cell-noborder">"""+confs+"""</td><td class="cell-noborder" style="width:10px;">10:00</td><td class="cell-noborder">23976</td><td class="cell-noborder">(TM) IHEART 2021</td><td class="cell-noborder">T- MOBILE ARENA</td><td class="cell-noborder">T- MOBILE ARENA LOADING DOCK</td><td class="cell-noborder">MGM RESORTS</td><td class="cell-noborder">OUT</td><td class="cell-noborder">A3</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder">Tentative</td><td class="cell-noborder-wide">PPE: SAFETY VESTS, HARD HAT, PROTECTIVE ANKLE BOOTS, GLOVES; WEAR FACE MASK// RETURN PARKING STUB TO SUP</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder"><input type="submit" name="dgResults$ctl14$ctl03" value="Confirm" onclick="return confirm(&quot;You're confirming you can work the (TM) IHEART 2021 OUT call on 09/19/2021 at 10:00 ?&quot;);" /></td><td class="cell-noborder-wide">&nbsp;</td>
+		</tr>"""
+    headers="""		<tr class="resultsheader-wide">
+			<td class="leftcell">Date</td><td class="leftcell">Time</td><td class="leftcell">Job #</td><td class="leftcell">Show</td><td class="leftcell">Venue</td><td class="leftcell">Location</td><td class="leftcell">Client</td><td class="leftcell">Type</td><td class="leftcell">Position</td><td class="leftcell">Details</td><td class="leftcell">Status</td><td class="leftcell-wide">Notes</td><td class="leftcell">TK/TL/SAF</td><td class="cell-noborder">&nbsp;</td><td class="leftcell">+</td>
+		</tr>"""
+    footers="""<tr>
+			<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+		</tr>"""
+    aaa=open(ad+'/conf.html','w')
+    aaa.write('      <span id="lblEmpName" class="subheader">McDemo, Test</span>')
+    aaa.write(headers)
+    aaa.write(yesterday)
+    aaa.write(today)
+    aaa.write(next)
+    aaa.write(conf)
+    aaa.write(footers)
+    aaa.close()
 
 
 def parse(aa):
@@ -309,6 +363,8 @@ def parse(aa):
     global mj2
     global mj3
     global l
+    global firstName
+    global lastName
     #print ('google')
 
     l=[]
@@ -345,11 +401,19 @@ def parse(aa):
     #    print (aaa,'2asdf')
     if usecache==1:
     #    print ('using cache data')
+
+        createcache()
         aaa=open(ad+'/conf.html','r')
 
 
     #ab=aaa.read()
     soup = BeautifulSoup(aaa, 'html.parser')
+
+    nn=(soup.find_all('span'))
+    #print (nn,'OMGYOUCOOLPERSON')
+    for i in range(len(nn)):
+        realName= (nn[i].get_text())
+        lastName,firstName=str.split(realName,', ')
 
     ab=(soup.find_all('tr'))
     #print (len(ab),'wowman')
@@ -443,10 +507,10 @@ def parse(aa):
 
 
     
-    for z in range(len(l)):
+    #for z in range(len(l)):
         #print (l[z],'listtt')
-        if z%dm==0:
-            print (l[z],'firstone')
+        #if z%dm==0:
+           #print (l[z],'firstone')
         '''
         
 
@@ -714,6 +778,8 @@ Builder.load_string('''
                 root.manager.current = root.manager.next()
 
         
+
+        
 <Options>:
     Image:
         source: 'r.png'
@@ -742,11 +808,11 @@ Builder.load_string('''
         MDCard:
             md_bg_color: .1,.1,.1, .7
             background: "black"
-            orientation: "horizontal"
+            orientation: "vertical"
             padding: dp(20)
             #spacing:dp(10)
 
-            BoxLayout:
+            MDBoxLayout:
                 
                 orientation: "vertical"
                 MDLabel:
@@ -758,19 +824,23 @@ Builder.load_string('''
                     color: app.theme_cls.primary_light
                     id: un2
                     text: root.username2
-                
-            MDRaisedButton:
-                text: 'Login'
-                width: dp(20)
-                padding: dp(30),dp(30)
-                #on_release: Factory.MyPopup().open()
-                #on_release: root.show_popup()
-                on_release:root.manager.current = 'LogIn'
-            MDRectangleFlatButton:
+            MDBoxLayout:
+                size_hint_x: None
+                #size: self.texture_size
+                pos_hint: {'center': 1}
+                adaptive_size: True
+                MDRaisedButton:
+                    text: 'Login'
+                    width: dp(20)
+                    padding: dp(30),dp(30)
+                    #on_release: Factory.MyPopup().open()
+                    #on_release: root.show_popup()
+                    on_release:root.manager.current = 'LogIn'
+                MDRectangleFlatButton:
 
-                text: 'clear'
-                width: dp(20),dp(30)
-                #padding: dp(30)
+                    text: 'clear'
+                    width: dp(20),dp(30)
+                    #padding: dp(30)
         MDCard:
             
             md_bg_color: .1,.1,.1, .7
@@ -778,7 +848,7 @@ Builder.load_string('''
             orientation: "horizontal"
             MDLabel:
                 color: app.theme_cls.primary_light
-                text: 'option1'
+                text: 'Notifications'
                 
             MDSwitch:
                 width: dp(55)
@@ -807,55 +877,57 @@ Builder.load_string('''
             md_bg_color: .1,.1,.1, .7
             size: '300dp','100dp'
             orientation: "horizontal"
-            MDLabel:
-                color: app.theme_cls.primary_light
-                text: 'Primary Color'
-
             MDBoxLayout:
-                adaptive_size: True
-                pos_hint: {"center_x": .5, "center_y": .5}
-
-                
-                MDBoxLayout:
-                    adaptive_size: True
-                    orientation: "vertical"
-
-                    MyToggleButton:
-                        text: "Orange"
-                        group: "x"
-                        on_press: app.color('Orange')
-                    MyToggleButton:
-                        text: "Blue"
-                        group: "x"
-                        on_press: app.color('Blue')
-
+                orientation: "vertical"
+                MDLabel:
+                    color: app.theme_cls.primary_light
+                    text: 'Primary Color'
 
                 MDBoxLayout:
                     adaptive_size: True
-                    orientation: "vertical"
+                    pos_hint: {"center_x": .5, "center_y": .5}
 
-                    MyToggleButton:
-                        text: "Red"
-                        group: "x"
-                        color: "Red"
-                        on_press: app.color('Red')
-                    MyToggleButton:
-                        text: "Green"
-                        group: "x"
-                        on_press: app.color('Green')
+                    
+                    MDBoxLayout:
+                        adaptive_size: True
+                        orientation: "vertical"
 
-                MDBoxLayout:
-                    adaptive_size: True
-                    orientation: "vertical"
+                        MyToggleButton:
+                            text: "Orange"
+                            group: "x"
+                            on_press: app.color('Orange')
+                        MyToggleButton:
+                            text: "Blue"
+                            group: "x"
+                            on_press: app.color('Blue')
 
-                    MyToggleButton:
-                        text: "Amber"
-                        group: "x"
-                        on_press: app.color('Amber')
-                    MyToggleButton:
-                        text: "Gray"
-                        group: "x"
-                        on_press: app.color('Gray')
+
+                    MDBoxLayout:
+                        adaptive_size: True
+                        orientation: "vertical"
+
+                        MyToggleButton:
+                            text: "Red"
+                            group: "x"
+                            color: "Red"
+                            on_press: app.color('Red')
+                        MyToggleButton:
+                            text: "Green"
+                            group: "x"
+                            on_press: app.color('Green')
+
+                    MDBoxLayout:
+                        adaptive_size: True
+                        orientation: "vertical"
+
+                        MyToggleButton:
+                            text: "Amber"
+                            group: "x"
+                            on_press: app.color('Amber')
+                        MyToggleButton:
+                            text: "Gray"
+                            group: "x"
+                            on_press: app.color('Gray')
 
 
                 
@@ -908,7 +980,73 @@ Builder.load_string('''
                     root.manager.transition.direction = 'up'
                     #transition=FadeTransition()
                     root.manager.current = 'Think Rhino'
-    
+
+            MDFillRoundFlatButton:
+                icon: "login"
+                #halign: 'center'
+                text: 'About2'
+                #text_color: root.custom_font_color
+                #md_bg_color: root.rhino_color
+
+                user_font_size: dp(80)
+                on_release: 
+                    root.manager.transition.direction = 'up'
+                    #transition=FadeTransition()
+                    root.manager.current = 'About'
+<About>: 
+    Image:
+        source: 'r.png'
+        source: 'rh.jpg'
+        size: self.width,self.height
+    BoxLayout:
+            
+            #orientation: "horizontal"
+            #Button:
+        spacing: dp(10)
+        padding: dp(10),dp(40)
+        MDCard:
+            #focus_behavior: True
+            #ripple_behavior: True
+            md_bg_color: .1,.1,.1, .7
+            #background: "white"
+            orientation: "vertical"
+            padding: dp(40)
+            spacing: dp(50)
+            pos_hint: {"center_x": .5, "center_y": .5}
+            MDLabel:
+                #text: "Title"
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                adaptive_height: True
+                
+                text: "Hi.  This was made in my spare time and has absolutly no affiliation to Rhino Staging. If you would like to report bugs please send them to kevincwulff@gmail.com "
+
+            
+
+            MDFillRoundFlatButton:
+                spacing: dp(0)
+                padding: dp(40),dp(40)
+                icon: "login"
+                text: 'Email'
+
+
+                user_font_size: dp(80)
+                on_release: 
+                    root.manager.transition.direction = 'up'
+                    root.email()
+            MDFillRoundFlatButton:
+                spacing: dp(0)
+                padding: dp(40),dp(40)
+                icon: "login"
+                text: 'Back'
+
+
+                user_font_size: dp(80)
+                on_release: 
+                    root.manager.transition.direction = 'up'
+                    root.manager.current = 'Options'
+
+
 <LogIn>:
     Image:
         source: 'r.png'
@@ -1318,7 +1456,9 @@ Builder.load_string('''
 
 
 
-
+class About(Screen):
+    def email(self):
+        webbrowser.open('mailto://kevinwulff@gmail.com')
 
 class CustomScreen(Screen):
     hue = NumericProperty(0)
@@ -1462,7 +1602,14 @@ class RV(RecycleView):
         #print (type(mj2),'wtff')
         #self.data=mj2
         #self.data=[]
-        self.data = [{'text': str(x),'text':'HELLO RHINO'} for x in range(1,len(mj3))]
+        now = datetime.datetime.now()
+
+
+
+
+        greeting=firstName+' '+lastName+'\n'+(now.strftime("%a"))+' '+(now.strftime("%m"))+'/'+(now.strftime("%d"))+'\nUpdated @ '+(now.strftime("%I"))+':'+(now.strftime("%M"))+' '+(now.strftime("%p"))
+        self.data = [{'text': str(x),'text':greeting} for x in range(1,len(mj3))]
+
         #print (mj2,'MOTHERUFCKER')
         #self.change_line()
         odd=0
@@ -1474,8 +1621,24 @@ class RV(RecycleView):
                 #joob2='[color='+rhino_color_hex+']'+month+'/'+date+'[/color] '+ti[q]+'  '+' \n[b]'+showreal+'[/b]  \n'+v[q]+'\n[size=40]'+ty[q]+'  '+p[q]+em+'  '+st[q]+'  '+n[q]
 
 
+                dobj = datetime.datetime.strptime(mj3[i][0]+'/'+mj3[i][1], '%m/%d/%Y/%H:%M')
+                diff=now-dobj
 
-                texta=mj3[i][0]+'/'+mj3[i][1]+' '+mj3[i][3]+' '+'\n[b]'+mj3[i][4]+'\n[/b]\n'+mj3[i][5]+'\n'+mj3[i][8]+' '+mj3[i][7]+' '+mj3[i][10]
+                diff2=humanize.naturaltime(now - dobj)
+                diff2=str(diff2)
+                diff=str(diff)
+                if 'irmed' not in mj3[i][10]:
+                    mj3[i][10]='[color=ff0000ff]'+mj3[i][10]+'[/color]'
+
+                fl=(dobj.strftime("%A"))+', '+(dobj.strftime("%m"))+'/'+(dobj.strftime("%d"))+ ' ' +(dobj.strftime("%I"))+':'+(dobj.strftime("%M"))+'[sup]'+(dobj.strftime("%p"))+'[/sup]'
+                #datetime_object = datetime.datetime.strptime(mj3[i][0], '%m/%d/%Y')
+                print (now.date(),dobj.date(),'NOWDATE')
+                if now.date()==dobj.date():
+                    today='[color=#00007fff][b]TODAY[/b][/color]\n'
+                else:
+                    today=''
+
+                texta=today+''+fl+' \n'+mj3[i][3]+' '+'\n[b]'+mj3[i][4]+'\n[/b][size=16 sp]'+mj3[i][5]+'\n'+mj3[i][8]+' '+mj3[i][7]+' '+mj3[i][10]+'\n'+diff2
                 #texta=mj3[i][0]
                 texta=str(texta)
 
@@ -1722,7 +1885,7 @@ class ScreenManagerApp(MDApp):
         print (gindex,'realindex')
         if not self.dialog:
             self.dialog = MDDialog(
-                text=mj3[gindex][0]+' '+mj3[gindex][1]+'\n'+mj3[gindex][3]+'\n'+mj3[gindex][4]+' \n'+mj3[gindex][7]+' '+mj3[gindex][8],
+                text='Only in Premium Version\n\n'+mj3[gindex][0]+' '+mj3[gindex][1]+'\n'+mj3[gindex][3]+'\n'+mj3[gindex][4]+' \n'+mj3[gindex][7]+' '+mj3[gindex][8],
                 buttons=[
                     MDFlatButton(
                         text="CANCEL", text_color=self.theme_cls.primary_color,on_release=self.dialog_close
@@ -1770,6 +1933,7 @@ class ScreenManagerApp(MDApp):
         root.add_widget(MenuScreen(name='menu'))
         root.add_widget(Options(name='Options'))
         root.add_widget(MDC(name='MDC'))
+        root.add_widget(About(name='About'))
         #root.add_widget(Ytube(name='Ytube'))
         root.add_widget(Info(name='Info'))
         root.add_widget(LogIn(name='LogIn'))
