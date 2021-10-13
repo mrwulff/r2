@@ -250,10 +250,10 @@ def login(self):
         #if usecache==True:
         #    print ('using fake data')
         #if usecache==False:
-        print (username,password,location,'lolsecurity')
+        print (username,password,location,'lolsecurity',usecache)
         if usecache==1:
             print ('using cache')
-        if usecache==3:
+        if usecache==0:
             print ("using real data")
             ssl.verify = False
             
@@ -411,9 +411,13 @@ def parse(aa):
 
     nn=(soup.find_all('span'))
     #print (nn,'OMGYOUCOOLPERSON')
+    print (nn)
     for i in range(len(nn)):
-        realName= (nn[i].get_text())
-        lastName,firstName=str.split(realName,', ')
+        try:
+            realName= (nn[i].get_text())
+            lastName,firstName=str.split(realName,', ')
+        except:
+            ''
 
     ab=(soup.find_all('tr'))
     #print (len(ab),'wowman')
