@@ -1,5 +1,5 @@
 debug=False
-ios=False
+ios=True
 
 from logging import NOTSET
 import os
@@ -23,7 +23,7 @@ if ios==False:
     #os.environ["PYTHON_EGG_CACHE"] = f"{HOME}/Library/Caches/{BUNDLE}"
     config_file=(f"{HOME}"+'/kt/')
 
-#####
+####
 ####
 #####
 from kivy.app import App
@@ -106,7 +106,7 @@ def writeuserdata():
     (data['scolor'])=scolor_g
     #print (data['username'])
     #data=str(data)
-    data = json.dumps(data, indent = 4)  
+    data = json.dumps(data, indent = 4)
 
     print (data)
     x=open(config_file+'data77.txt','w')
@@ -118,13 +118,13 @@ def writeuserdata_init():
 
                                     
     #user=user_g
-    if user_g=='':  
+    if user_g=='':
         user_g='blankfuck'
     print (user_g,'testtest')
     print (dir(user_g))
     
 
-    x = ' { "username":"kevincwulff@gmail.com", "password":"nope", "city":"lasvegas","ios":"False","usecache":"1","pcolor":"Black","scolor":"White","debug":"True"}'
+    x = ' { "username":"test@gmail.com", "password":"", "city":"lasvegas","ios":"False","usecache":"1","pcolor":"Red","scolor":"White","debug":"True"}'
     y = json.loads(x)
     #y = json.dumps(x)
     with open(config_file+'data77.txt', 'w') as outfile:
@@ -328,25 +328,25 @@ def createcache():
 
 
     yesterday="""<tr>
-			<td class="cell-noborder">"""+yesterdays+"""</td><td class="cell-noborder" style="width:10px;">07:00</td><td class="cell-noborder">24123</td><td class="cell-noborder">(GGA) PAPARAZZI</td><td class="cell-noborder">MGM GRAND GARDEN ARENA</td><td class="cell-noborder">MEET AT LOADING DOCK</td><td class="cell-noborder">MGM RESORTS</td><td class="cell-noborder">SHOW</td><td class="cell-noborder">HL</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder">Confirmed</td><td class="cell-noborder-wide">HARD HAT, VEST, GLOVES, FULL ANKLE STEEL/COMP BOOT; BRING PARKING STUB TO SUP ONSITE; ALL A3 ,L3, & V3 NEED TO BE CATWALK CAPABLE</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder-wide">&nbsp;</td>
-		</tr>"""
+            <td class="cell-noborder">"""+yesterdays+"""</td><td class="cell-noborder" style="width:10px;">07:00</td><td class="cell-noborder">24123</td><td class="cell-noborder">(GGA) PAPARAZZI</td><td class="cell-noborder">MGM GRAND GARDEN ARENA</td><td class="cell-noborder">MEET AT LOADING DOCK</td><td class="cell-noborder">MGM RESORTS</td><td class="cell-noborder">SHOW</td><td class="cell-noborder">HL</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder">Confirmed</td><td class="cell-noborder-wide">HARD HAT, VEST, GLOVES, FULL ANKLE STEEL/COMP BOOT; BRING PARKING STUB TO SUP ONSITE; ALL A3 ,L3, & V3 NEED TO BE CATWALK CAPABLE</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder-wide">&nbsp;</td>
+        </tr>"""
 
     today="""<tr class="whiterow">
-			<td class="cell-noborder">"""+todays+"""</td><td class="cell-noborder" style="width:10px;">06:00</td><td class="cell-noborder">24152</td><td class="cell-noborder">(TM) GEORGE STRAIT</td><td class="cell-noborder">T-MOBILE ARENA</td><td class="cell-noborder">LOADING DOCK</td><td class="cell-noborder">MGM RESORTS</td><td class="cell-noborder">IN</td><td class="cell-noborder">L</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder">Confirmed</td><td class="cell-noborder-wide">MASKS, HARD HATS, SAFETY VESTS, GLOVES, AND FULL ANKLE PROTECTIVE TOE BOOTS</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder-wide">&nbsp;</td>
-		</tr>"""
+            <td class="cell-noborder">"""+todays+"""</td><td class="cell-noborder" style="width:10px;">06:00</td><td class="cell-noborder">24152</td><td class="cell-noborder">(TM) GEORGE STRAIT</td><td class="cell-noborder">T-MOBILE ARENA</td><td class="cell-noborder">LOADING DOCK</td><td class="cell-noborder">MGM RESORTS</td><td class="cell-noborder">IN</td><td class="cell-noborder">L</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder">Confirmed</td><td class="cell-noborder-wide">MASKS, HARD HATS, SAFETY VESTS, GLOVES, AND FULL ANKLE PROTECTIVE TOE BOOTS</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder-wide">&nbsp;</td>
+        </tr>"""
     next="""<tr>
-			<td class="cell-noborder" style="background-color:Gray;">"""+nexts+"""</td><td class="cell-noborder" style="background-color:Gray;width:10px;">08:00</td><td class="cell-noborder" style="background-color:Gray;">24150</td><td class="cell-noborder" style="background-color:Gray;">(PT) HOUSE </td><td class="cell-noborder" style="background-color:Gray;">PARK THEATRE</td><td class="cell-noborder" style="background-color:Gray;">PARK MGM LAS VEGAS</td><td class="cell-noborder" style="background-color:Gray;">MGM RESORTS</td><td class="cell-noborder" style="background-color:Gray;">IN</td><td class="cell-noborder" style="background-color:Gray;">L3</td><td class="cell-noborder" style="background-color:Gray;">&nbsp;</td><td class="cell-noborder" style="background-color:Gray;">Confirmed</td><td class="cell-noborder-wide" style="background-color:Gray;">WORKING W/ JESSE</td><td class="cell-noborder" style="background-color:Gray;">&nbsp;</td><td class="cell-noborder-wide">&nbsp;</td>
-		</tr>"""
+            <td class="cell-noborder" style="background-color:Gray;">"""+nexts+"""</td><td class="cell-noborder" style="background-color:Gray;width:10px;">08:00</td><td class="cell-noborder" style="background-color:Gray;">24150</td><td class="cell-noborder" style="background-color:Gray;">(PT) HOUSE </td><td class="cell-noborder" style="background-color:Gray;">PARK THEATRE</td><td class="cell-noborder" style="background-color:Gray;">PARK MGM LAS VEGAS</td><td class="cell-noborder" style="background-color:Gray;">MGM RESORTS</td><td class="cell-noborder" style="background-color:Gray;">IN</td><td class="cell-noborder" style="background-color:Gray;">L3</td><td class="cell-noborder" style="background-color:Gray;">&nbsp;</td><td class="cell-noborder" style="background-color:Gray;">Confirmed</td><td class="cell-noborder-wide" style="background-color:Gray;">WORKING W/ JESSE</td><td class="cell-noborder" style="background-color:Gray;">&nbsp;</td><td class="cell-noborder-wide">&nbsp;</td>
+        </tr>"""
 
     conf="""<tr>
-			<td class="cell-noborder">"""+confs+"""</td><td class="cell-noborder" style="width:10px;">10:00</td><td class="cell-noborder">23976</td><td class="cell-noborder">(TM) IHEART 2021</td><td class="cell-noborder">T- MOBILE ARENA</td><td class="cell-noborder">T- MOBILE ARENA LOADING DOCK</td><td class="cell-noborder">MGM RESORTS</td><td class="cell-noborder">OUT</td><td class="cell-noborder">A3</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder">Tentative</td><td class="cell-noborder-wide">PPE: SAFETY VESTS, HARD HAT, PROTECTIVE ANKLE BOOTS, GLOVES; WEAR FACE MASK// RETURN PARKING STUB TO SUP</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder"><input type="submit" name="dgResults$ctl14$ctl03" value="Confirm" onclick="return confirm(&quot;You're confirming you can work the (TM) IHEART 2021 OUT call on 09/19/2021 at 10:00 ?&quot;);" /></td><td class="cell-noborder-wide">&nbsp;</td>
-		</tr>"""
-    headers="""		<tr class="resultsheader-wide">
-			<td class="leftcell">Date</td><td class="leftcell">Time</td><td class="leftcell">Job #</td><td class="leftcell">Show</td><td class="leftcell">Venue</td><td class="leftcell">Location</td><td class="leftcell">Client</td><td class="leftcell">Type</td><td class="leftcell">Position</td><td class="leftcell">Details</td><td class="leftcell">Status</td><td class="leftcell-wide">Notes</td><td class="leftcell">TK/TL/SAF</td><td class="cell-noborder">&nbsp;</td><td class="leftcell">+</td>
-		</tr>"""
+            <td class="cell-noborder">"""+confs+"""</td><td class="cell-noborder" style="width:10px;">10:00</td><td class="cell-noborder">23976</td><td class="cell-noborder">(TM) IHEART 2021</td><td class="cell-noborder">T- MOBILE ARENA</td><td class="cell-noborder">T- MOBILE ARENA LOADING DOCK</td><td class="cell-noborder">MGM RESORTS</td><td class="cell-noborder">OUT</td><td class="cell-noborder">A3</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder">Tentative</td><td class="cell-noborder-wide">PPE: SAFETY VESTS, HARD HAT, PROTECTIVE ANKLE BOOTS, GLOVES; WEAR FACE MASK// RETURN PARKING STUB TO SUP</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder"><input type="submit" name="dgResults$ctl14$ctl03" value="Confirm" onclick="return confirm(&quot;You're confirming you can work the (TM) IHEART 2021 OUT call on 09/19/2021 at 10:00 ?&quot;);" /></td><td class="cell-noborder-wide">&nbsp;</td>
+        </tr>"""
+    headers="""        <tr class="resultsheader-wide">
+            <td class="leftcell">Date</td><td class="leftcell">Time</td><td class="leftcell">Job #</td><td class="leftcell">Show</td><td class="leftcell">Venue</td><td class="leftcell">Location</td><td class="leftcell">Client</td><td class="leftcell">Type</td><td class="leftcell">Position</td><td class="leftcell">Details</td><td class="leftcell">Status</td><td class="leftcell-wide">Notes</td><td class="leftcell">TK/TL/SAF</td><td class="cell-noborder">&nbsp;</td><td class="leftcell">+</td>
+        </tr>"""
     footers="""<tr>
-			<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
-		</tr>"""
+            <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+        </tr>"""
     aaa=open(ad+'/conf.html','w')
     aaa.write('      <span id="lblEmpName" class="subheader">McDemo, Test</span>')
     aaa.write(headers)
@@ -392,8 +392,11 @@ def parse(aa):
     l2=[]
 
     
-
-
+    try:
+        aaa=open(ad+'/conf.html','r')
+    except:
+        createcache()
+        aaa=open(ad+'/conf.html','r')
     #if usecache==True:
     #    print ('asdfasdfasdf')
     if usecache==0:
@@ -776,7 +779,7 @@ Builder.load_string('''
             #md_bg_color: root.rhino_color
 
             user_font_size: dp(80)
-            on_release: 
+            on_release:
                 root.manager.transition.direction = 'up'
                 #transition=FadeTransition()
                 root.manager.current = root.manager.next()
@@ -951,7 +954,7 @@ Builder.load_string('''
                 id:usecachetoggle
                 active: root.usecache3
                 #rgba: root.first_color if root.font_size > root.ff else root.second_color
-                on_active: 
+                on_active:
                     app.on_checkbox_active(*args)
                     root.updatetext()
 
@@ -980,7 +983,7 @@ Builder.load_string('''
                 #md_bg_color: root.rhino_color
 
                 user_font_size: dp(80)
-                on_release: 
+                on_release:
                     root.manager.transition.direction = 'up'
                     #transition=FadeTransition()
                     root.manager.current = 'Think Rhino'
@@ -993,11 +996,11 @@ Builder.load_string('''
                 #md_bg_color: root.rhino_color
 
                 user_font_size: dp(80)
-                on_release: 
+                on_release:
                     root.manager.transition.direction = 'up'
                     #transition=FadeTransition()
                     root.manager.current = 'About'
-<About>: 
+<About>:
     Image:
         source: 'r.png'
         source: 'rh.jpg'
@@ -1035,7 +1038,7 @@ Builder.load_string('''
 
 
                 user_font_size: dp(80)
-                on_release: 
+                on_release:
                     root.manager.transition.direction = 'up'
                     root.email()
             MDFillRoundFlatButton:
@@ -1046,7 +1049,7 @@ Builder.load_string('''
 
 
                 user_font_size: dp(80)
-                on_release: 
+                on_release:
                     root.manager.transition.direction = 'up'
                     root.manager.current = 'Options'
 
@@ -1127,7 +1130,7 @@ Builder.load_string('''
                 
             MDBoxLayout:
                 size_hint:.8,.19
-                orientation: "horizontal"        
+                orientation: "horizontal"
                 Label:
                     text: 'Loaction:'
                     color: app.theme_cls.accent_color
@@ -1146,14 +1149,14 @@ Builder.load_string('''
         MDBoxLayout:
             padding: dp(40)
             spacing: dp(40)
-            orientation: "horizontal"  
+            orientation: "horizontal"
             halign: "right"
 
 
 
 
 
-            pos_hint: { "center_y": .9}      
+            pos_hint: { "center_y": .9}
             MDRectangleFlatButton:
                 text: 'Clear'
 
@@ -1800,7 +1803,7 @@ class MenuScreen(Screen):
     
 
 class Content(Screen):
-    def confirm_show(self): 
+    def confirm_show(self):
         print ('confirming show')
         cshow()
         
