@@ -60,6 +60,7 @@ from kivymd.uix.button import MDRaisedButton
 
 import datetime
 import humanize
+import random
 
 
 
@@ -318,13 +319,18 @@ def createcache():
     t=(x.strftime("%m"))+'/'+(x.strftime("%d"))+'/'+(x.strftime("%Y"))
     yesterdays=t
 
-    x= (datetime.date.today() + datetime.timedelta(days=+1))
-    t=(x.strftime("%m"))+'/'+(x.strftime("%d"))+'/'+(x.strftime("%Y"))
+    x22= (datetime.date.today() + datetime.timedelta(days=+1))
+    t=(x22.strftime("%m"))+'/'+(x22.strftime("%d"))+'/'+(x22.strftime("%Y"))
     nexts=t
 
     x= (datetime.date.today() + datetime.timedelta(days=+10))
     t=(x.strftime("%m"))+'/'+(x.strftime("%d"))+'/'+(x.strftime("%Y"))
     confs=t
+
+    cshow=['GEORGE STRAIT','VGK','NCAA','RANDOM','UFC 269',' VGK vs DAL','PBL Boxing','(TM) EMPIRE CLASSIC BASKETBALL']
+    rven=['Dolby Theater','MGM Grand','T-Mobile Arena','Wynn','Mandalay Bay']
+    rpos=['SH','L3','V3','A3']
+    numshows=30
 
 
     yesterday="""<tr>
@@ -334,9 +340,7 @@ def createcache():
     today="""<tr class="whiterow">
             <td class="cell-noborder">"""+todays+"""</td><td class="cell-noborder" style="width:10px;">06:00</td><td class="cell-noborder">24152</td><td class="cell-noborder">(TM) GEORGE STRAIT</td><td class="cell-noborder">T-MOBILE ARENA</td><td class="cell-noborder">LOADING DOCK</td><td class="cell-noborder">MGM RESORTS</td><td class="cell-noborder">IN</td><td class="cell-noborder">L</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder">Confirmed</td><td class="cell-noborder-wide">MASKS, HARD HATS, SAFETY VESTS, GLOVES, AND FULL ANKLE PROTECTIVE TOE BOOTS</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder-wide">&nbsp;</td>
         </tr>"""
-    next="""<tr>
-            <td class="cell-noborder" style="background-color:Gray;">"""+nexts+"""</td><td class="cell-noborder" style="background-color:Gray;width:10px;">08:00</td><td class="cell-noborder" style="background-color:Gray;">24150</td><td class="cell-noborder" style="background-color:Gray;">(PT) HOUSE </td><td class="cell-noborder" style="background-color:Gray;">PARK THEATRE</td><td class="cell-noborder" style="background-color:Gray;">PARK MGM LAS VEGAS</td><td class="cell-noborder" style="background-color:Gray;">MGM RESORTS</td><td class="cell-noborder" style="background-color:Gray;">IN</td><td class="cell-noborder" style="background-color:Gray;">L3</td><td class="cell-noborder" style="background-color:Gray;">&nbsp;</td><td class="cell-noborder" style="background-color:Gray;">Confirmed</td><td class="cell-noborder-wide" style="background-color:Gray;">WORKING W/ JESSE</td><td class="cell-noborder" style="background-color:Gray;">&nbsp;</td><td class="cell-noborder-wide">&nbsp;</td>
-        </tr>"""
+    
 
     conf="""<tr>
             <td class="cell-noborder">"""+confs+"""</td><td class="cell-noborder" style="width:10px;">10:00</td><td class="cell-noborder">23976</td><td class="cell-noborder">(TM) IHEART 2021</td><td class="cell-noborder">T- MOBILE ARENA</td><td class="cell-noborder">T- MOBILE ARENA LOADING DOCK</td><td class="cell-noborder">MGM RESORTS</td><td class="cell-noborder">OUT</td><td class="cell-noborder">A3</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder">Tentative</td><td class="cell-noborder-wide">PPE: SAFETY VESTS, HARD HAT, PROTECTIVE ANKLE BOOTS, GLOVES; WEAR FACE MASK// RETURN PARKING STUB TO SUP</td><td class="cell-noborder">&nbsp;</td><td class="cell-noborder"><input type="submit" name="dgResults$ctl14$ctl03" value="Confirm" onclick="return confirm(&quot;You're confirming you can work the (TM) IHEART 2021 OUT call on 09/19/2021 at 10:00 ?&quot;);" /></td><td class="cell-noborder-wide">&nbsp;</td>
@@ -350,12 +354,20 @@ def createcache():
     aaa=open(ad+'/conf.html','w')
     aaa.write('      <span id="lblEmpName" class="subheader">McDemo, Test</span>')
     aaa.write(headers)
-    aaa.write(yesterday)
-    aaa.write(today)
-    aaa.write(next)
+    #aaa.write(yesterday)
+    #aaa.write(today)
+    for x in range(numshows):
+        x22= (datetime.date.today() + datetime.timedelta(days=-2+x))
+        t=(x22.strftime("%m"))+'/'+(x22.strftime("%d"))+'/'+(x22.strftime("%Y"))
+        nexts=t
+        next="""<tr>
+            <td class="cell-noborder" style="background-color:Gray;">"""+nexts+"""</td><td class="cell-noborder" style="background-color:Gray;width:10px;">08:00</td><td class="cell-noborder" style="background-color:Gray;">24150</td><td class="cell-noborder" style="background-color:Gray;">"""+(random.choice(cshow))+""" </td><td class="cell-noborder" style="background-color:Gray;">"""+(random.choice(rven))+"""</td><td class="cell-noborder" style="background-color:Gray;">PARK MGM LAS VEGAS</td><td class="cell-noborder" style="background-color:Gray;">MGM RESORTS</td><td class="cell-noborder" style="background-color:Gray;">IN</td><td class="cell-noborder" style="background-color:Gray;">"""+(random.choice(rpos))+"""</td><td class="cell-noborder" style="background-color:Gray;">&nbsp;</td><td class="cell-noborder" style="background-color:Gray;">Confirmed</td><td class="cell-noborder-wide" style="background-color:Gray;">WORKING W/ JESSE</td><td class="cell-noborder" style="background-color:Gray;">&nbsp;</td><td class="cell-noborder-wide">&nbsp;</td>
+        </tr>"""
+        aaa.write(next)
     aaa.write(conf)
     aaa.write(footers)
     aaa.close()
+    print (random.choice(cshow))
 
 
 def parse(aa):
@@ -949,7 +961,7 @@ Builder.load_string('''
                 
                 
             MDSwitch:
-                width: dp(20)
+                width: dp(50)
                 padding: dp(30)
                 id:usecachetoggle
                 active: root.usecache3
@@ -1075,42 +1087,50 @@ Builder.load_string('''
             md_bg_color: .1,.1,.1, .7
             
             orientation: "vertical"
-            size_hint:.9,.97
+            #size_hint:.9,.97
             spacing: dp(25)
-            padding: dp(50)
+            padding: dp(25)
             pos_hint: {"center_x": .5, "center_y": .1}
             #pos_hint: {"center_x": .5}
 
             MDBoxLayout:
+                padding: dp(10)
                 
-                size_hint:(.8,dp(.38))
+                #size_hint:(.8,dp(.38))
                 orientation: "horizontal"
-                Label:
+                
+                MDLabel:
+                    valign: 'bottom'
+                    halign: "right"
                     color: app.theme_cls.accent_color
-                    text: 'Email:'
+                    text: 'Email:  '
                     
 
                 MDTextFieldRect:
-                    valign: 'bottom'
+                    valign: 'center'
                     mode: "fill"
                     fill_color: .5, .5, .5, .9
                     text: root.user_l
                     hint_text: 'EXAMPLE@EXAMPLE.COM'
                     id: email
+                    size_hint:3,.5
                     
                     multiline: False
             MDBoxLayout:
                 padding: dp(10)
-                size_hint:.8,dp(.49)
+                #size_hint:.8,dp(.49)
                 orientation: "horizontal"
-                Label:
+                
+                MDLabel:
+                    halign: "right"
+                    valign: "center"
                     color: app.theme_cls.accent_color
-                    text: 'Password:'
+                    text: 'Password:  '
 
                 #TextInput:
                 MDTextFieldRect:
 
-                    valign: 'top'
+                    valign: 'center'
                     width: dp(100)
                 
                     text: root.pass_l
@@ -1118,6 +1138,7 @@ Builder.load_string('''
                     password: True
                     #text:'blank password'
                     id:pass2
+                    size_hint:3,.5
                     
                     multiline: False
                     color_active: app.theme_cls.accent_color
@@ -1129,10 +1150,13 @@ Builder.load_string('''
 
                 
             MDBoxLayout:
-                size_hint:.8,.19
+                padding: dp(10)
+                #size_hint:.8,.19
                 orientation: "horizontal"
-                Label:
-                    text: 'Loaction:'
+                MDLabel:
+                    valign: 'bottom'
+                    halign: "right"
+                    text: 'Loaction:  '
                     color: app.theme_cls.accent_color
 
 
@@ -1141,10 +1165,12 @@ Builder.load_string('''
 
                 Spinner:
                 #MDDropDownItem:
+                    valign: "top"
                     values: app.locations
                     id: loc
                     color: app.theme_cls.accent_color
                     text:'location'
+                    size_hint:3,1
 
         MDBoxLayout:
             padding: dp(40)
@@ -1169,10 +1195,11 @@ Builder.load_string('''
             MDRaisedButton:
                 text: "Save"
                 on_release: root.saveconfig()
+#<SwipeButton@Carousel>:
 
 <SelectableLabel>:
 
-
+    
     padding: dp(30),dp(30)
     height: self.texture_size[1]
 
@@ -1269,6 +1296,7 @@ Builder.load_string('''
 
     MDBoxLayout:
     #FloatLayout:
+   # <SwipeButton@Carousel>:
         #text_color: 'white'
         #spacing: dp(105)
         canvas:
@@ -1276,25 +1304,28 @@ Builder.load_string('''
                 rgba:0,1,0,0
         orientation: "vertical"
         #adaptive_height: True
-        height:50
+        #height:500
         #size:50,50
-        RV:
-            #padding: dp(30)
-            #on_press:   root.manager.current = root.manager.next()
-            size: 1500, 50
-            
-            height:500
-            
+
+        FloatLayout:
+            RV:
+                #padding: dp(30)
+                #on_press:   root.manager.current = root.manager.next()
+                #size: 1500, 50
+                adaptive_height: True
+                height:50000
+   
             
         MDBoxLayout:
-            padding: dp(40),dp(20)
-            spacing: dp(20)
+            padding: dp(20)
+            spacing: dp(30)
 
             adaptive_height: True
             orientation: "horizontal"
-            size: 400, 500
-            height:20
-            default_size: 50,50
+            #size: 400, 500
+            #height:dp(20)
+            #default_size: 50,50
+            #halign: 'center'
             MDFillRoundFlatButton:
                 icon: "keyboard-backspace"
                 user_font_size: "32sp"
@@ -1309,17 +1340,17 @@ Builder.load_string('''
                 adaptive_height: True
                 
                 on_release: root.manager.current = root.manager.previous()
-            MDFillRoundFlatButton:
-                icon: "information-outline"
-                text: 'Info'
-                #root.wow()
-                size_hint: None, None
-                size: 150,150
-                #on_release: root.manager.current = 'Info23'
-                on_release:
-                    #root.wow()
-                    #root.manager.current = 'menu'
-                    #app.show_alert_dialog()
+            #MDFillRoundFlatButton:
+            #    icon: "information-outline"
+            #    text: 'Info'
+            #    #root.wow()
+            #    size_hint: None, None
+            #    size: 150,150
+            #    #on_release: root.manager.current = 'Info23'
+            #    on_release:
+            #        root.wow()
+            #        root.manager.current = 'menu'
+            #        #app.show_alert_dialog()
 
             MDFillRoundFlatButton:
                 icon: "information-outline"
@@ -1332,7 +1363,15 @@ Builder.load_string('''
                     #root.wow()
                     #root.manager.current = 'menu'
                     app.show_confirm_dialog()
+            #MDFillRoundFlatButton:
+            #    text: 'Refresh'
+            #    size_hint: None, None
+            #    size: 150,150
+            #    on_release:
+            #        #app.update()
+            #        root.wow2()
 
+        
 <MenuScreen>:
     canvas:
         Color:
@@ -1353,14 +1392,26 @@ Builder.load_string('''
         orientation: "vertical"
         #text_color:'white'
         font_size_hint:19
+        spacing: dp(20)
 
-
-        Label:
-            text_size : self.width, None
-            
-            halign:'left'
-            id: date
-            text: root.name
+        MDCard:
+            padding: dp(20)
+            text_color: self.theme_cls.primary_color
+            Label:
+                text_size : self.width, None
+                
+                halign:'left'
+                id: date
+                text: root.name
+        MDCard:
+            padding: dp(20)
+            text_color: self.theme_cls.primary_color
+            Label:
+                text_size : self.width, None
+                
+                halign:'left'
+                id: time
+                text: root.name
 
 
         Label:
@@ -1375,8 +1426,8 @@ Builder.load_string('''
             id: venue
             text: root.name
             markup: True
-            on_ref_press:
-                webbrowser.open('http://google.com')
+            #on_ref_press:
+            #    webbrowser.open('http://google.com')
                 
 
 
@@ -1397,12 +1448,14 @@ Builder.load_string('''
             halign:'left'
             id: type
             text: root.name
-
-        Label:
-            text_size : self.width, None
-            halign:'left'
-            id: position
-            text: root.name
+        MDCard:
+            padding: dp(20)
+            text_color: self.theme_cls.primary_color
+            Label:
+                text_size : self.width, None
+                halign:'left'
+                id: position
+                text: root.name
         Label:
             text_size : self.width, None
             halign:'left'
@@ -1537,6 +1590,8 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
         ''' Catch and handle the view changes '''
         global gindex
         
+        print('lol')
+        
         self.index = index
         gindex=index
         return super(SelectableLabel, self).refresh_view_attrs(
@@ -1553,6 +1608,11 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
         global gindex
         ''' Respond to the selection of items in the view. '''
         self.selected = is_selected
+        print ('lol234')
+        #print ((RV.data.name))
+        #RV.data=['abc']
+
+        createcache()
         if is_selected:
             #print("selection changed to {0}".format(rv.data[index]))
             #manager.current = manager.previous()
@@ -1564,9 +1624,45 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
         
 
 xxx=[{'text':'hello'},{'text':'bye'}]
-def Confirm(self):
-    print ('omgheconfirmed')
-    print (mj3[gindex])
+
+def openbrowser():
+    ssl.verify = False
+    
+    
+
+
+    PE_LOGIN = 'https://www.thinkrhino.com/employee/'+location+'/index.aspx'
+    PE_SCHEDULE = 'https://www.thinkrhino.com/employee/'+location+'/Schedule.aspx'
+
+    #USERNAME = c.text
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    # aaa=open(dir_path+'/test2.html','wb')
+    #global browser
+    browser = mechanize.Browser()
+    
+    browser.set_handle_robots(False)
+    browser.set_handle_equiv(False)
+    browser.addheaders = [('User-agent',
+                        'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
+    browser.open(PE_LOGIN)
+    browser.select_form(name="ctl00")
+    browser['emailaddress'] = username
+    browser['mypassword'] = password
+    
+
+    
+    res = browser.submit()
+
+
+
+
+
+    res = browser.open(PE_SCHEDULE)
+    return browser
+
+    
+
+    #self.dialog_close
 def Convert(lst):
     res_dct = {lst[i]: lst[i + 1] for i in range(0, len(lst), 2)}
     return res_dct
@@ -1622,8 +1718,11 @@ class RV(RecycleView):
         odd=0
         if 1==1:
             print (mj3)
+
             for i in range(1,len(mj3)-1):
+                past=False
                 odd=odd+1
+               
                 #print (mj3[i])
                 #joob2='[color='+rhino_color_hex+']'+month+'/'+date+'[/color] '+ti[q]+'  '+' \n[b]'+showreal+'[/b]  \n'+v[q]+'\n[size=40]'+ty[q]+'  '+p[q]+em+'  '+st[q]+'  '+n[q]
 
@@ -1631,15 +1730,20 @@ class RV(RecycleView):
                 dobj = datetime.datetime.strptime(mj3[i][0]+'/'+mj3[i][1], '%m/%d/%Y/%H:%M')
                 diff=now-dobj
 
+                if now.date()>dobj.date():
+                    past=True
+
                 diff2=humanize.naturaltime(now - dobj)
                 diff2=str(diff2)
                 diff=str(diff)
                 if 'irmed' not in mj3[i][10]:
                     mj3[i][10]='[color=ff0000ff]'+mj3[i][10]+'[/color]'
-
+                
+                    
                 fl=(dobj.strftime("%A"))+', '+(dobj.strftime("%m"))+'/'+(dobj.strftime("%d"))+ ' ' +(dobj.strftime("%I"))+':'+(dobj.strftime("%M"))+'[sup]'+(dobj.strftime("%p"))+'[/sup]'
                 #datetime_object = datetime.datetime.strptime(mj3[i][0], '%m/%d/%Y')
                 print (now.date(),dobj.date(),'NOWDATE')
+                
                 if now.date()==dobj.date():
                     today='[color=#00007fff][b]TODAY[/b][/color]\n'
                 else:
@@ -1647,10 +1751,13 @@ class RV(RecycleView):
 
                 texta=today+''+fl+' \n'+mj3[i][3]+' '+'\n[b]'+mj3[i][4]+'\n[/b][size=16 sp]'+mj3[i][5]+'\n'+mj3[i][8]+' '+mj3[i][7]+' '+mj3[i][10]+'\n'+diff2
                 #texta=mj3[i][0]
+                if past==True:
+                    texta='[size=16 sp]'+fl+'\n'+mj3[i][3]+'\n'+mj3[i][4]
                 texta=str(texta)
 
                 #self.data[i]={'text': texta}
                 #self.data[i]={'text': mj2[i]}
+                
                 if odd%2==0:
                 #    pass
                     self.data[i]={'text': texta,'color':app.theme_cls.primary_light,'font_size':f_size}
@@ -1664,41 +1771,72 @@ class RV(RecycleView):
     #login()
     def change_line(self):
         self.data[0] = '101'
+    def update(self):
+        print ('update22')
+        RV.data=[{'text': str(x),'text':'omg'} for x in range(10)]
+        RV.data=[]
         
     #login(1)
     
 
+def refresh_from_data(self):
+        #self._refresh_flags['data'].append(kwargs)
+        #self._refresh_trigger()
+        pass
+
+
 class RVScreen(Screen):
+    
+    def wow2(self):
+        createcache()
+        print ('wow2')
+        print (RV.data)
+        refresh_from_data(self)
+        #self._refresh_flags['data'].append(kwargs)
+        print (self.manager.screens[1].ids)
+    
     def wow(self):
         #global index
         print (gindex,'rvscreen')
+        xxx= (mj3[gindex])
+        print(xxx)
+        self.manager.screens[3].ids.date.text=str( xxx[0])
+        self.manager.screens[3].ids.time.text=xxx[1]
+        self.manager.screens[3].ids.show.text=xxx[3]
+        self.manager.screens[3].ids.jobid.text=xxx[2]
+        self.manager.screens[3].ids.venue.text=xxx[4]
+        self.manager.screens[3].ids.location.text=xxx[5]
+        self.manager.screens[3].ids.client.text=xxx[6]
+        self.manager.screens[3].ids.type.text=xxx[7]
+        self.manager.screens[3].ids.position.text=xxx[8]
+        self.manager.screens[3].ids.details.text=xxx[9]
+        self.manager.screens[3].ids.status.text=xxx[10]
+        self.manager.screens[3].ids.notes.text=xxx[11]
+        self.manager.screens[3].ids.tk.text=xxx[12]
+
+        '''
         self.infoo={'text': mj2[gindex],'color':'blue','font_size':35}
-        self.manager.screens[3].ids.date.text=str( l[(gindex*14)]+' '+l[(gindex*14)+1])
-        self.manager.screens[3].ids.jobid.text=l[(gindex*14)+2]
-        self.manager.screens[3].ids.show.text=l[(gindex*14)+3]
-        self.manager.screens[3].ids.venue.text=l[(gindex*14)+4]
         self.manager.screens[3].ids.venue.text=l[(gindex*14)+4]+'[ref=some]google.com[/ref]'
 
-        self.manager.screens[3].ids.location.text=l[(gindex*14)+5]
-        self.manager.screens[3].ids.client.text=l[(gindex*14)+6]
-        self.manager.screens[3].ids.type.text=l[(gindex*14)+7]
-        self.manager.screens[3].ids.position.text=l[(gindex*14)+8]
-        self.manager.screens[3].ids.details.text=l[(gindex*14)+9]
-        self.manager.screens[3].ids.status.text=l[(gindex*14)+10]
         self.manager.screens[3].ids.notes.text=l[(gindex*14)+11]
         self.manager.screens[3].ids.tk.text=l[(gindex*14)+12]
         #wimg = Image(self,source='t.jpg')
         print (l[(gindex*14)+4])
-        if 'WYNN' in l[(gindex*14)+4]:
+        '''
+        print (xxx[4].lower(),'wtfislower')
+        if 'wynn' in xxx[4].lower():
             print ('wynn234234')
-            self.manager.screens[3].ids.jpgs.source='wynn.jpg'
+            self.manager.screens[3].ids.jpgs.source='ven/wynn.jpg'
 
-        if 'PARK' in l[(gindex*14)+4]:
-            self.manager.screens[3].ids.jpgs.source='park.jpg'
+        if 'dolby' in xxx[4].lower():
+            self.manager.screens[3].ids.jpgs.source='ven/park.jpg'
             print ('park234234')
-        if 'MOBILE' in l[(gindex*14)+4]:
-            self.manager.screens[3].ids.jpgs.source='tmo.jpg'
+        if 'mobile' in xxx[4].lower():
+            self.manager.screens[3].ids.jpgs.source='ven/tmo.jpg'
+        if 'grand' in xxx[4].lower():
+            self.manager.screens[3].ids.jpgs.source='ven/mgm.jpg'
         print(self.manager.screens[3].ids)
+        
 
 
 
@@ -1818,6 +1956,7 @@ class ScreenManagerApp(MDApp):
         self.dialog.dismiss(force=True)
     def buyapp(self, *args):
         webbrowser.open('http://kevinwulff.com/app')
+        self.dialog_close()
         
         
     def mode(self,x):
@@ -1877,6 +2016,55 @@ class ScreenManagerApp(MDApp):
         Close popup on Done click
         '''
         self.dialog.dismiss()
+
+    def Confirm(self,*args):
+        print ('omgheconfirmed')
+        job= (mj3[gindex])
+        print (len(job),job)
+
+
+        confable=False
+        #print ('ONEJOB',onejob[index5+1],index5)
+
+        try:
+            if len(job)==14:
+                print (job[13])
+            
+                confable = True
+        except:
+            print ('nonconfirmable')
+            pass
+
+        if confable==True:
+            browser=openbrowser()
+            print (type(browser))
+            if type(browser)==unicode:
+                print(browser, 'browser fail')
+            else:
+                browser.select_form(name="ctl00")
+                print(browser, 'browser 1')
+                control_t = browser.form.find_control("__EVENTTARGET")
+                control_a = browser.form.find_control("__EVENTARGUMENT")
+                print(browser, 'browser 2')
+                control_t.readonly = False
+                control_a.readonly = False
+
+                control_t.value = str(job[13])
+                control_a.value = 'Confirm'
+                print(browser, 'browser 3')
+
+                response = browser.submit()
+                print(browser, 'browser 4')
+                aa = response.get_data()
+                print(browser, 'browser 5')
+
+                aaa = open('aaa.html', 'wb')
+                aaa.write((aa))
+                aaa.close()
+                #browser.open('test2.html')
+        else:
+            print('failed to confirm')
+        self.dialog.dismiss()
     rloc=[]
     locations=[]
     locations2=['denver', 'Colorado','dc', 'DC','florida' , 'Florida','georgia' , 'Georgia','indiana' , 'Indiana','kentucky' , 'Kentucky','lasvegas' , 'Las Vegas','losangeles' , 'Los Angeles' ,'louisiana' , 'Louisiana','michigan' , 'Michigan','minnesota' , 'Minnesota','missouri' , 'Missouri','mississippi' , 'Mississippi','montana' , 'Montana','newmexico' , 'New Mexico','northerncalifornia' , 'Northern California' ,'northwest' , 'Northwest','ohio' , 'Ohio','reno' , 'Reno','california' , 'San Diego','southcarolina' , 'South Carolina','tempe' , 'Tempe','memphis' , 'Tennessee','texas' , 'Texas','tucson' , 'Tucson','wisconsin' , 'Wisconsin',]
@@ -1898,7 +2086,7 @@ class ScreenManagerApp(MDApp):
                         text="CANCEL", text_color=self.theme_cls.primary_color,on_release=self.dialog_close
                     ),
                     MDRaisedButton(
-                        text="Confirm!",on_release=Confirm
+                        text="Confirm!",on_release=self.Confirm
                     ),
                 ],
             )
