@@ -1,0 +1,2 @@
+python toolchain.py build pillow
+python toolchain.py pip install appdirs kivymd pillow==8.2.0 humanize mechanize bs4 emoji
