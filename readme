@@ -17,7 +17,7 @@ toolchain build python3 pillow plyer pyobjus kivy pillow libpng libjpeg
 
 python toolchain.py build pillow
 #python toolchain.py pip install appdirs kivymd pillow==8.2.0 humanize mechanize bs4 emoji webcolors twisted pyperclip kivy-garden kivy-garden.graph
-python toolchain.py pip install appdirs kivymd pillow humanize mechanize bs4 emoji webcolors twisted pyperclip kivy-garden kivy-garden.graph 
+python toolchain.py pip install appdirs kivymd pillow humanize mechanize bs4 emoji webcolors twisted pyperclip kivy-garden kivy-garden.graph faker
 cd ~
 . venv/bin/activate
 cd 7
